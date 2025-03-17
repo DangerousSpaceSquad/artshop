@@ -12,10 +12,9 @@ WIP
 
 0. Clone the repo. I'd recommend using the [GitHub CLI](https://cli.github.com/) to run `gh repo clone DangerousSpaceSquad/artshop` in your terminal.
 1. Get [Docker](https://docs.docker.com/desktop/setup/install/windows-install/).
-2. Run `aws configure` in the command line. For the time being, you'll need to fill in some secret values, which you can get from Kyle.
-3. With Docker open, run `./deployment/run.sh` from the `artshop` directory, in Bash.
+2. With Docker open, run `./deployment/run.sh` from the `artshop` directory, in Bash.
     * Options to run the development environment in Windows natively to come.
-4. Connect to <http://localhost:8080> in your web browser of choice.
+3. Connect to <http://localhost:8080> in your web browser of choice.
 
 ## Usage
 

@@ -16,5 +16,5 @@ aws ecr get-login-password \
     --password-stdin ${AWS_ID}.dkr.ecr.us-east-1.amazonaws.com
 docker tag $TAG $ECR_TAG
 docker push $ECR_TAG
-echo "Successfully pushed the blockchain container to ECR."
+echo "Successfully pushed the container to ECR."
 exit 0
