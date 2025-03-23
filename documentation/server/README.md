@@ -13,3 +13,4 @@ This document describes the behavior and organization of the server-side code.
 ### Debugging Tools
 
 * Use [Swagger](https://swagger.io/) to debug API calls. To see the swagger page, launch the server in DEBUG mode and connect to `http://localhost:5185/swagger/index.html`. **Ensure you use the correct port, and use HTTP instead of HTTPS.**
+* For reference for building controllers, check `artshop.Server/Controllers/DemoController.cs`.

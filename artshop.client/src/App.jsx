@@ -43,6 +43,7 @@ function App() {
 
     return (
         <div>
+            <p><a href='weatherforecast'>Demo Link</a></p>
             <h1 id="tableLabel">Weather forecast</h1>
             <p>This component demonstrates fetching data from the server.</p>
             {contents}
