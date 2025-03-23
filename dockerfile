@@ -10,17 +10,11 @@ RUN . "$NVM_DIR/nvm.sh" && nvm install ${NODE_VERSION}
 RUN . "$NVM_DIR/nvm.sh" && nvm use v${NODE_VERSION}
 RUN . "$NVM_DIR/nvm.sh" && nvm alias default v${NODE_VERSION}
 ENV PATH="/root/.nvm/versions/node/v${NODE_VERSION}/bin/:${PATH}"
-RUN node --version
-RUN npm --version
 
 WORKDIR /App
-# Copy everything
 COPY ./artshop.Server ./artshop.Server/
 COPY ./artshop.client ./artshop.client/
 WORKDIR artshop.Server
-# Restore as distinct layers
-RUN dotnet restore
-# Build and publish a release
 RUN dotnet publish -o out
 
 # Build runtime image
