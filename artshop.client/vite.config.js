@@ -34,8 +34,8 @@ if (!fs.existsSync(certFilePath) || !fs.existsSync(keyFilePath)) {
     }
 }
 
-const target = env.ASPNETCORE_HTTPS_PORT ? `https://localhost:${env.ASPNETCORE_HTTPS_PORT}` :
-    env.ASPNETCORE_URLS ? env.ASPNETCORE_URLS.split(';')[0] : 'https://localhost:7098';
+const target = env.ASPNETCORE_HTTPS_PORT ? `http://localhost:${env.ASPNETCORE_HTTPS_PORT}` :
+    env.ASPNETCORE_URLS ? env.ASPNETCORE_URLS.split(';')[0] : 'http://localhost:5185';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -46,16 +46,21 @@ export default defineConfig({
         }
     },
     server: {
+        // For the debug environment, re-route any requests for the api to the debug backend server.
+        // This is necessary, as the debug backend and frontend use different ports
+        // This is not used in production, since the backend and frontend ports are the same there.
         proxy: {
-            '^/weatherforecast': {
+            '/api': {
                 target,
-                secure: false
+                secure: false,
+                changeOrigin: true
+            },
+            '/swagger': {
+                target,
+                secure: false,
+                changeOrigin: true
             }
         },
-        port: 5173,
-        https: {
-            key: fs.readFileSync(keyFilePath),
-            cert: fs.readFileSync(certFilePath),
-        }
+        port: 5173
     }
 })

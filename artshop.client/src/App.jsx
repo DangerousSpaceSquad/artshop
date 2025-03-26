@@ -43,7 +43,7 @@ function App() {
 
     return (
         <div>
-            <p><a href='weatherforecast'>Demo Link</a></p>
+            <p><a href='swagger'>Swagger Link (only works in DEBUG mode)</a></p>
             <h1 id="tableLabel">Weather forecast</h1>
             <p>This component demonstrates fetching data from the server.</p>
             {contents}
@@ -54,7 +54,7 @@ function App() {
     // This defines the setup function, which fetches data from `weatherforecast`, converts it to JSON, then runs the setForecasts state setter on it.
     // The cleanup function is normally defined as a callback function. Since this function doesn't return any callback, there is no cleanup function.
     async function populateWeatherData() {
-        const response = await fetch('weatherforecast');
+        const response = await fetch('api/weatherforecast');
         const data = await response.json();
         setForecasts(data);
     }
