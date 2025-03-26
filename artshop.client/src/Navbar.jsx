@@ -1,11 +1,18 @@
 import React from 'react';
 import './Navbar.css';
+import { Instagram, Twitter, ShoppingCart} from "lucide-react"
 export default function Navbar() {
   return <nav className="nav">
     <div className="navbar-left">
       <ul>
         <li>
-          <a href = "https://www.instagram.com/telrem.art">Insta</a>
+          <a href = "https://www.instagram.com/telrem.art"> <Instagram /></a>
+        </li>
+        <li>
+          <a href = "https://x.com/Telrem2"> <Twitter /></a>
+        </li>
+        <li>
+          <a href = "https://www.deviantart.com/telrem">DA</a>
         </li>
       </ul>
     </div>
@@ -28,7 +35,7 @@ export default function Navbar() {
     <div className="navbar-right">
       <ul>
         <li>
-          <a href = "/cart">Cart</a>
+          <a href = "/cart"><ShoppingCart /></a>
         </li>
       </ul>
     </div>

@@ -1,6 +1,6 @@
 import React from "react"
 import { useState } from "react"
-import { ArrowBigLeft, ArrowBigRight, CircleDot, Circle } from "lucide-react"
+import { ChevronLeft, ChevronRight, CircleDot, Circle } from "lucide-react"
 import './ImageSlider.css'
 
 type ImageSliderProps = {
@@ -39,10 +39,10 @@ export function ImageSlider({ imageUrls }: ImageSliderProps) {
             
 
             <button onClick={showPrevImage} className="img-slider-btn" style={{left: 0}}>
-                <ArrowBigLeft />
+                <ChevronLeft />
             </button>
             <button onClick={showNextImage} className="img-slider-btn" style={{right: 0}}>
-                <ArrowBigRight />
+                <ChevronRight />
             </button>
             <div style={{
                 position: "absolute",
