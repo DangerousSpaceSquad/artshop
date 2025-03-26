@@ -1,0 +1,45 @@
+*{
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+.nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #F689A2;
+    color: #fff;
+    padding: 0.5rem;
+    gap: 2rem;
+    font-size: 1.2rem;
+  }
+
+  .navbar-left{
+    justify-content: start;
+  }
+
+  .navbar-center{
+    justify-content: center;
+  }
+
+  .navbar-right{
+    justify-content: end;
+  }
+
+  .nav ul{
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    display: flex;
+    gap: 1rem;
+  }
+  .nav a{
+    color: inherit;
+    text-decoration: none;
+  }
+  .nav li:hover {
+    color: #A68383;
+  }
