@@ -17,7 +17,9 @@ function App() {
     <div>
         <div className = "banner-image"></div>
         <Navbar/>
-        <ImageSlider imageUrls={CAROUSEL_IMAGES}/>
+        <div className = "image-carousel">
+            <ImageSlider imageUrls={CAROUSEL_IMAGES}/>
+        </div>
     </div>
    )
 
