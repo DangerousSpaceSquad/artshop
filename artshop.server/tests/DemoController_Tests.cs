@@ -23,6 +23,8 @@ public class DemoController_Tests
     {
         var result = _demoController.TestRoute();
         Assert.Equal("hi", result);
+        // Deliberately failing test
+        Assert.Equal(false, true);
     }
 
     // Create a "Theory" to ensure that OtherRoute() correctly returns a greeting.

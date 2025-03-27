@@ -14,6 +14,8 @@ describe('App', () => {
         expect(screen.getByText('Home')).toBeInTheDocument();
         // The getByX() functions throw an error if the element isn't found, so use queryByX() for values you expect to be null:
         expect(screen.queryByText("My Account")).toBeNull();
+        // Deliberately failing test
+        expect(false).toBe(true);
     });
     // For further reference, see this tutorial: https://www.robinwieruch.de/react-testing-library/
 })
