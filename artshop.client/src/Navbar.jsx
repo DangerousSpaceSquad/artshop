@@ -1,4 +1,3 @@
-import React from 'react';
 import './Navbar.css';
 import { Instagram, Twitter, ShoppingCart} from "lucide-react"
 export default function Navbar() {

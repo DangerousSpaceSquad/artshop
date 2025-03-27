@@ -1,0 +1,32 @@
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+      - name: Install necessary packages
+        shell: bash 
+        run: |
+          cd artshop.client
+          npm i
+      - name: Check style
+        shell: bash 
+        run: |
+          chmod +x deployment/scripts/*.sh
+          chmod +x deployment/lint.sh
+          ./deployment/lint.sh
+      - name: Run unit tests
+        shell: bash
+        run: |
+          chmod +x deployment/scripts/*.sh
+          chmod +x deployment/test.sh
+          ./deployment/test.sh ALL
