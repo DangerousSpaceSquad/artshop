@@ -1,0 +1,24 @@
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+jobs:
+  containerize-and-deploy:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./artshop
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '7.0.x'
+      - name: Check style
+        shell: bash
+        run: source deployment/lint.sh
+      - name: Run unit tests
+        shell: bash
+        run: source deployment/test.sh
