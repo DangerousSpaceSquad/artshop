@@ -18,6 +18,12 @@ jobs:
         run: |
           cd artshop.client
           npm i
+      - name: Check style
+        shell: bash 
+        run: |
+          chmod +x deployment/scripts/*.sh
+          chmod +x deployment/lint.sh
+          ./deployment/lint.sh
       - name: Run unit tests
         shell: bash
         run: |
