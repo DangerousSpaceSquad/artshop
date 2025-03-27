@@ -17,9 +17,9 @@ jobs:
         shell: bash 
         run: |
           chmod +x deployment/lint.sh
-          source deployment/lint.sh
+          ./deployment/lint.sh
       - name: Run unit tests
         shell: bash
         run: |
           chmod +x deployment/test.sh
-          source deployment/test.sh
+          ./deployment/test.sh
