@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "artshop.Server", "artshop.S
 EndProject
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "artshop.client", "artshop.client\artshop.client.esproj", "{4384B9E8-2084-4986-B075-9A5CC62F3BAD}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{4ADE6412-5CD8-4C6F-A912-022592B0CD74}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server.Tests", "tests\Server.Tests\Server.Tests.csproj", "{DE52E6FF-4496-4FEA-8705-094FBE50F2A3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,11 +27,18 @@ Global
 		{4384B9E8-2084-4986-B075-9A5CC62F3BAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4384B9E8-2084-4986-B075-9A5CC62F3BAD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4384B9E8-2084-4986-B075-9A5CC62F3BAD}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{DE52E6FF-4496-4FEA-8705-094FBE50F2A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE52E6FF-4496-4FEA-8705-094FBE50F2A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE52E6FF-4496-4FEA-8705-094FBE50F2A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE52E6FF-4496-4FEA-8705-094FBE50F2A3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CB1D5970-1F9C-4CA8-9F29-E17BBCC6FDA7}
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{DE52E6FF-4496-4FEA-8705-094FBE50F2A3} = {4ADE6412-5CD8-4C6F-A912-022592B0CD74}
 	EndGlobalSection
 EndGlobal
