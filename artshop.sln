@@ -3,13 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35222.181
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "artshop.Server", "artshop.Server\artshop.Server.csproj", "{3CA3F3F8-503D-416B-ABE4-0B4D03C5C817}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "artshop.server\server\artshop.server.csproj", "{3CA3F3F8-503D-416B-ABE4-0B4D03C5C817}"
 EndProject
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "artshop.client", "artshop.client\artshop.client.esproj", "{4384B9E8-2084-4986-B075-9A5CC62F3BAD}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{4ADE6412-5CD8-4C6F-A912-022592B0CD74}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server.Tests", "tests\Server.Tests\Server.Tests.csproj", "{DE52E6FF-4496-4FEA-8705-094FBE50F2A3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tests", "artshop.server\tests\tests.csproj", "{DE52E6FF-4496-4FEA-8705-094FBE50F2A3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

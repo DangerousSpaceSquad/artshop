@@ -12,13 +12,13 @@ RUN . "$NVM_DIR/nvm.sh" && nvm alias default v${NODE_VERSION}
 ENV PATH="/root/.nvm/versions/node/v${NODE_VERSION}/bin/:${PATH}"
 
 WORKDIR /App
-COPY ./artshop.Server ./artshop.Server/
+COPY ./artshop.server/server ./artshop.server/server/
 COPY ./artshop.client ./artshop.client/
-WORKDIR artshop.Server
+WORKDIR artshop.server/server
 RUN dotnet publish -o out
 
 # Build runtime image
 FROM mcr.microsoft.com/dotnet/aspnet:8.0
 WORKDIR /App
-COPY --from=build /App/artshop.Server/out .
-ENTRYPOINT ["dotnet", "artshop.Server.dll"]
+COPY --from=build /App/artshop.server/server/out .
+ENTRYPOINT ["dotnet", "artshop.server.dll"]
