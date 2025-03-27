@@ -1,29 +1,38 @@
 import { useEffect, useState } from 'react';
 import './App.css';
-import { ImageSlider } from "./ImageSlider";
 import Navbar from "./Navbar";
-import carousel1 from "./assets/Demo1.jpg"
-import carousel2 from "./assets/Demo2.jpg"
-import carousel3 from "./assets/Demo3.jpg"
-import carousel4 from "./assets/Demo4.jpg"
-import carousel5 from "./assets/Demo5.jpg"
+
 import footerLogo from "./assets/Logo2023Transparent.png"
 
-const CAROUSEL_IMAGES = [carousel1, carousel2, carousel3, carousel4, carousel5]
+import Home from "./pages/Home"
+import Shop from "./pages/Shop"
+import About from "./pages/About"
+import Portfolio from "./pages/Portfolio"
+
+
 
 function App() {
-   
-   
+   let component
+   switch (window.location.pathname){
+    case "/":
+        component = <Home />
+        break
+    case "/shop":
+        component = <Shop />
+        break
+    case "/about":
+        component = <About />
+        break
+    case "/portfolio":
+        component = <Portfolio />
+        break
+   }
     return(
     
     <div>
-        
-
         <div className = "banner-image"></div>
         <Navbar/>
-        <div className = "image-carousel">
-            <ImageSlider imageUrls={CAROUSEL_IMAGES}/>
-        </div>
+        {component}
         <div className = "footer">
             <img 
             style={{width: "20%", height: "auto"}}

@@ -28,7 +28,7 @@ body {
   }
 
   .navbar-center{
-    justify-content: center;
+    margin-inline: auto;
   }
 
   .navbar-right{

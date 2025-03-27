@@ -1,0 +1,30 @@
+*{
+    box-sizing: border-box;
+}
+
+.about-container{
+    background-color: #F7D8E0;
+    color: #A68383;
+    width: 70%;
+    max-height: fit-content;
+    padding: 20px;
+    margin: 3rem;
+    margin-inline: auto;
+    text-align: center;
+    border-radius: 25px;
+}
+
+h1{
+    color: black;
+}
+
+h2{
+    color: black;
+}
+
+a{
+    color: #F689A2
+}
+a:hover{
+    color: #765b5b;
+}

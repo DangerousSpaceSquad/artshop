@@ -14,12 +14,7 @@
     max-width: 100%;
     background-size: cover;
 }
-.image-carousel{
-    max-width: "1200px";
-    width: "100%";
-    aspect-ratio: "5 / 3";
-    margin: "0 auto";
-}
+
 .footer{
     display: grid;
     background-color: #F689A2;
@@ -28,5 +23,6 @@
     height: 200px;
     max-width: 100%;
     place-items: center;
+    box-shadow: 0px -4px 5px 5px rgba(0, 0, 0, 0.259);
 }
 
