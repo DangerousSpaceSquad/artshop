@@ -13,6 +13,11 @@ jobs:
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: '7.0.x'
+      - name: Install necessary packages
+        shell: bash 
+        run: |
+          cd artshop.client
+          npm i
       - name: Check style
         shell: bash 
         run: |
