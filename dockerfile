@@ -15,7 +15,7 @@ WORKDIR /App
 COPY ./artshop.server/server ./artshop.server/server/
 COPY ./artshop.client ./artshop.client/
 WORKDIR artshop.server/server
-RUN dotnet publish -o out
+RUN dotnet publish --configuration Release -o out
 
 # Build runtime image
 FROM mcr.microsoft.com/dotnet/aspnet:8.0
