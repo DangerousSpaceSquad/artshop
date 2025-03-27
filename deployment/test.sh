@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 TAG=artshop:latest
 MODE=$1
 if [ -z "$MODE" ]
