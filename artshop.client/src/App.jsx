@@ -37,7 +37,7 @@ function App() {
             <img 
             style={{width: "20%", height: "auto"}}
             src = {footerLogo} classname = "footer-logo"/>
-            <p>Copyright 2025 Telrem. All rights reserved.</p>
+            <p>Copyright 2025. All rights reserved.</p>
         </div>
     </div>
    )

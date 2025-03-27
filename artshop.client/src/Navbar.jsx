@@ -6,13 +6,13 @@ export default function Navbar() {
     <div className="navbar-left">
       <ul>
         <li>
-          <a href = "https://www.instagram.com/telrem.art"> <Instagram /></a>
+          <a href = ""> <Instagram /></a>
         </li>
         <li>
-          <a href = "https://x.com/Telrem2"> <Twitter /></a>
+          <a href = ""> <Twitter /></a>
         </li>
         <li>
-          <a href = "https://www.deviantart.com/telrem">DA</a>
+          <a href = "">DA</a>
         </li>
       </ul>
     </div>
