@@ -14,8 +14,12 @@ jobs:
         with:
           dotnet-version: '7.0.x'
       - name: Check style
-        shell: bash
-        run: source deployment/lint.sh
+        shell: bash 
+        run: |
+          chmod +x deployment/lint.sh
+          source deployment/lint.sh
       - name: Run unit tests
         shell: bash
-        run: source deployment/test.sh
+        run: |
+          chmod +x deployment/test.sh
+          source deployment/test.sh
