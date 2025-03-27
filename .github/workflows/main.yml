@@ -4,11 +4,8 @@ on:
   pull_request:
     branches: [ master ]
 jobs:
-  containerize-and-deploy:
+  test:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./artshop
     steps:
       - name: Check out the repository
         uses: actions/checkout@v4
