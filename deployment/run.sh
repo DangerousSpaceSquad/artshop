@@ -3,9 +3,10 @@ TAG=artshop:latest
 MODE=$1
 if [ -z "$MODE" ]
 then
-    echo "To set the build environment, run this script with \`DEBUG\` (faster, debugging tools) or \`STAGE\` (slower, realistic enviroment) as the first argument. Defaulting to \`STAGE\`."
+    echo "To set the build environment, run this script with \`DEBUG\` (faster, debugging tools), \`STAGE\` (slower, realistic enviroment), or \`PROD\` (deploy to production) as the first argument. Defaulting to \`STAGE\`."
     MODE=STAGE
 fi
+echo $MODE
 if [ "$MODE" == "STAGE" ]
 then
     ./deployment/scripts/containerize.sh $TAG && \
