@@ -1,6 +1,14 @@
 .image-carousel{
-    max-width: "1200px";
-    width: "100%";
-    aspect-ratio: "5 / 3";
-    margin: "0 auto";
+    width: 100%;
+    aspect-ratio: 5 / 3;
+    margin: 0 auto;
+}
+
+.shop-grid{
+    display: grid;
+    width: 100%;
+    gap: 20px 20px;
+    grid-template-columns: auto auto auto;
+    justify-content: center;
+    padding: 20px;
 }
