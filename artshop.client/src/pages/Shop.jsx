@@ -1,3 +1,21 @@
+import React from 'react';
+import ShopItem from "../ShopItem";
+import './Shop.css'
+
 export default function Home() {
-    return <h1>Shop</h1>
+    return (
+        <div className="shop-grid">
+            <ShopItem />
+            <ShopItem />
+            <ShopItem />
+            <ShopItem />
+            <ShopItem />
+            <ShopItem />
+            <ShopItem />
+            <ShopItem />
+            <ShopItem />
+            <ShopItem />
+            <ShopItem />
+        </div>
+    )
 }
