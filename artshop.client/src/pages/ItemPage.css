@@ -18,6 +18,12 @@
 
 }
 
+@media screen and (orientation: portrait){
+    .item{
+        grid-template-columns: auto;
+    }
+}
+
 .product-info{
     display: grid;
     row-gap: 1rem;

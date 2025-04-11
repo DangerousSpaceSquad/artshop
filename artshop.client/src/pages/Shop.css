@@ -1,8 +1,27 @@
-.shop-grid{
+.shop-grid {
+    box-sizing: border-box;
     display: grid;
     width: 100%;
     gap: 20px 20px;
-    grid-template-columns: auto auto auto;
+    
     justify-content: center;
     padding: 20px;
+}
+
+@media only screen and (max-width: 600px) {
+    .shop-grid {
+        grid-template-columns: auto;
+    }
+}
+
+@media only screen and (min-width: 600px) {
+    .shop-grid {
+        grid-template-columns: auto auto;
+    }
+}
+
+@media only screen and (min-width: 1000px) {
+    .shop-grid {
+        grid-template-columns: auto auto auto;
+    }
 }
