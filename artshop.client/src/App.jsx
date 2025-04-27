@@ -40,7 +40,7 @@ function App() {
             <div className="footer">
                 <img
                     style={{ width: "20%", height: "auto" }}
-                    src={footerLogo} classname="footer-logo" />
+                    src={footerLogo} className="footer-logo" />
                 <p>Copyright 2025. All rights reserved.</p>
             </div>
         </div>

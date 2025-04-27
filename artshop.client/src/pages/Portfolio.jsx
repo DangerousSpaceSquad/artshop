@@ -1,4 +1,3 @@
-import React from 'react';
 import './Portfolio.css'
 import { ImageGallery } from "../ImageGallery";
 

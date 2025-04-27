@@ -1,5 +1,4 @@
 import testImg from "./assets/bigfoot.jpg"
-import React from "react"
 import './ShopItem.css'
 
 export default function ShopItem() {

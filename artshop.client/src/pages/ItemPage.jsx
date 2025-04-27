@@ -1,4 +1,3 @@
-import React from "react"
 import { useState } from "react"
 import './ItemPage.css'
 import testImg from "../assets/bigfoot.jpg"
@@ -6,6 +5,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react"
 
 export default function ItemPage() {
     const [quantity, setQuantity] = useState(1)
+    // eslint-disable-next-line
     const [curSKU, setSKU] = useState(1)
     const skuBtnList = document.querySelectorAll('.sku-btn');
 
