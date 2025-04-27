@@ -9,9 +9,9 @@ then
 fi
 if [[ "$MODE" =~ ^(BACKEND|ALL)$ ]];
 then
-    ./deployment/scripts/test_backend.sh
+    ./script/helpers/test_backend.sh
 fi
 if [[ "$MODE" =~ ^(FRONTEND|ALL)$ ]];
 then
-    ./deployment/scripts/test_frontend.sh
+    ./script/helpers/test_frontend.sh
 fi

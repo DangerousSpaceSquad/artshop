@@ -8,5 +8,5 @@ then
 fi
 if [[ "$MODE" =~ ^(FRONTEND|ALL)$ ]];
 then
-    ./deployment/scripts/lint_frontend.sh
+    ./script/helpers/lint_frontend.sh
 fi

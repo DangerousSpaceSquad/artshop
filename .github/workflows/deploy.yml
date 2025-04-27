@@ -19,15 +19,15 @@ jobs:
       - name: Check style
         shell: bash 
         run: |
-          chmod +x deployment/scripts/*.sh
-          chmod +x deployment/lint.sh
-          ./deployment/lint.sh
+          chmod +x script/helpers/*.sh
+          chmod +x script/lint.sh
+          ./script/lint.sh
       - name: Run unit tests
         shell: bash
         run: |
-          chmod +x deployment/scripts/*.sh
-          chmod +x deployment/test.sh
-          ./deployment/test.sh ALL
+          chmod +x script/helpers/*.sh
+          chmod +x script/test.sh
+          ./script/test.sh ALL
   deploy:
     needs: test
     runs-on: ubuntu-latest
@@ -51,7 +51,7 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
         run: |
-          chmod +x deployment/scripts/*.sh
-          chmod +x deployment/lint.sh
-          ./deployment/scripts/containerize.sh artshop:latest
-          ./deployment/scripts/push.sh artshop:latest
+          chmod +x script/helpers/*.sh
+          chmod +x script/lint.sh
+          ./script/helpers/containerize.sh artshop:latest
+          ./script/helpers/push.sh artshop:latest
