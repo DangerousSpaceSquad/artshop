@@ -1,0 +1,166 @@
+*{
+    box-sizing: border-box;
+}
+
+.item{
+    padding: 20px;
+    display: grid;
+    gap: 10px;
+    grid-template-columns: 60% auto;
+    background-color: #ffffff;
+    color: #F689A2;
+    align-items: start;
+    border-radius: 25px;
+    overflow:hidden;
+    width: 80%;
+    margin: 3rem;
+    margin-inline: auto;
+
+}
+
+@media screen and (orientation: portrait){
+    .item{
+        grid-template-columns: auto;
+    }
+}
+
+.product-info{
+    display: grid;
+    row-gap: 1rem;
+}
+
+.product-info h1{
+    margin: 0;
+}
+
+.product-info h2{
+    margin: 0;
+}
+
+.product-info h3{
+    margin: 0;
+}
+
+.product-info p{
+    margin: 0;
+}
+
+.product-image{
+    height: 100%;
+    width: 100%;
+    overflow:hidden;
+    object-fit: cover;
+}
+
+.sku-selector{
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    padding-right: 15px;
+    gap: 1rem;
+    font-size: 1.2rem;
+}
+
+
+
+.sku-btn{
+    all: unset;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    gap: 1rem;
+    display: flex;
+    border-radius: 5px;
+    outline-style: solid;
+    outline-color: #F689A2;
+    cursor: pointer;
+    height: 1.5rem;
+    width: 7rem;
+    transition: font-size 100ms ease-in-out;
+    transition: color 100ms ease-in-out;
+}
+
+.selected-sku{
+    background-color: #F689A2;
+    color: #ffffff;
+}
+
+.sku-btn:hover{
+    font-size: 1.3rem;
+    color: #A68383;
+}
+
+.sku-btn:active{
+    font-size: 1.1rem;
+    color: #765b5b;
+}
+
+
+.quantity-selector{
+    display: flex;
+    outline-style: solid;
+    outline-color: #F689A2;
+    border-radius: 5px;
+    padding-right: 5px;
+    padding-left: 5px;
+    height: 2rem;
+    width: fit-content;
+    align-items: center;
+    font-size: 1.2rem;
+}
+
+.qty-btn:hover > *{
+    scale: 1.2;
+}
+
+.qty-btn:active > *{
+    scale: 0.8;
+}
+
+.qty-btn > * {
+    stroke: #F689A2;
+    fill: none;
+    width: 1rem;
+    height: 1rem;
+}
+
+.cart-add-btn{
+    all: unset;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    background-color: #F689A2;
+    color: #ffffff;
+    cursor: pointer;
+    height: 3rem;
+    width: 15rem;
+    font-size: 1.5rem;
+    transition: font-size 100ms ease-in-out;
+    transition: color 100ms ease-in-out;
+}
+
+.cart-add-btn:hover{
+    font-size: 1.6rem;
+    color: #A68383;
+}
+
+.cart-add-btn:active{
+    font-size: 1.4rem;
+    color: #765b5b;
+}
+
+
+.qty-btn{
+    all: unset;
+    display: block;
+    top: 0;
+    bottom: 0;
+    padding: 1rem;
+    cursor: pointer;
+    transition: scale 100ms ease-in-out;
+}
+
+
+
+

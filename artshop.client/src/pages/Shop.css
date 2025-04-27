@@ -1,14 +1,9 @@
-.image-carousel{
-    width: 100%;
-    
-    margin: 0 auto;
-}
-
-.shop-grid{
+.shop-grid {
     box-sizing: border-box;
     display: grid;
-    width: 80%;
+    width: 100%;
     gap: 20px 20px;
+    
     justify-content: center;
     padding: 20px;
 }
@@ -17,28 +12,16 @@
     .shop-grid {
         grid-template-columns: auto;
     }
-
-    .image-carousel{
-        aspect-ratio: 1;
-    }
 }
 
 @media only screen and (min-width: 600px) {
     .shop-grid {
         grid-template-columns: auto auto;
     }
-
-    .image-carousel{
-        aspect-ratio: 3 / 2;
-    }
 }
 
 @media only screen and (min-width: 1000px) {
     .shop-grid {
         grid-template-columns: auto auto auto;
-    }
-
-    .image-carousel{
-        aspect-ratio: 5 / 2;
     }
 }

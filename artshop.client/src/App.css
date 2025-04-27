@@ -11,7 +11,6 @@
     background-image: url('assets/banner.jpg');
     height: 200px;
     background-position: center;
-    max-width: 100%;
     background-size: cover;
 }
 
@@ -24,5 +23,6 @@
     max-width: 100%;
     place-items: center;
     box-shadow: 0px -4px 5px 5px rgba(0, 0, 0, 0.259);
+    z-index: 99;
 }
 
