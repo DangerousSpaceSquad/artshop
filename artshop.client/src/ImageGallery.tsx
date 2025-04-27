@@ -30,7 +30,7 @@ export function ImageGallery({ imageUrls }: ImageGalleryProps) {
 
     return (
         <div>
-            <div class="full-img" id="fullImgBox">
+            <div className="full-img" id="fullImgBox">
                 <img src = {imageUrls[0]} id="fullImg" />
                 <button onClick={CloseFullImg} className="full-img-close-btn" >
                     
