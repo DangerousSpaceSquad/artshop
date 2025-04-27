@@ -36,8 +36,8 @@ If you've been invited to collaborate, take the take the following steps to add 
 2. Make any changes you'd like. Remember that we follow test driven development, so design your tests *before* your code if at all possible.
     * Check the `/documentation/` directory for any relevant documentation.
 3. Run the tests and ensure your code passes.
-    * Use `./deployment/lint.sh` to lint (style check) your code.
-    * Use `./deployment/test.sh` to test your code.
+    * Use `./script/lint.sh` to lint (style check) your code.
+    * Use `./script/test.sh` to test your code.
 4. Push your changes.  
     * In VSCode, go to the Source Control tab by clicking the branching symbol on the left pane.
     * Commit your changes to your branch.
