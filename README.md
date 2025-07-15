@@ -75,11 +75,14 @@ If you've been invited to collaborate, check the GitHub Project to see what feat
 
 ## License
 
-WIP
+Distributed under the MIT license. See `LICENSE.txt` for more information.
 
 ## Contact
 
-WIP
+Kyle Reto - @KyleReto - [kylereto@gmail.com](kylereto@gmail.com)  
+Christopher Dean - @ChristopherADean
+
+Project Link: [https://github.com/DangerousSpaceSquad/artshop](https://github.com/DangerousSpaceSquad/artshop)
 
 ## Acknowledgements
 
