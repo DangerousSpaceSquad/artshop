@@ -79,8 +79,8 @@ Distributed under the MIT license. See `LICENSE.txt` for more information.
 
 ## Contact
 
-Kyle Reto - @KyleReto - [kylereto@gmail.com](kylereto@gmail.com)  
-Christopher Dean - @ChristopherADean
+Kyle Reto - [@KyleReto](https://github.com/KyleReto) - [kylereto@gmail.com](kylereto@gmail.com)  
+Christopher Dean - [@ChristopherADean](https://github.com/ChristopherADean)
 
 Project Link: [https://github.com/DangerousSpaceSquad/artshop](https://github.com/DangerousSpaceSquad/artshop)
 
