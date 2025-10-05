@@ -1,11 +1,14 @@
 // Boilerplate
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Encodings.Web;
+using artshop.Server.Models;
+using artshop.Server.Data;
 
 namespace artshop.Server.Controllers
 {
     // This controller handles all routes to {base URL}/api/demo.
     [Route("api/demo")]
-    public class DemoController : ControllerBase
+    public class DemoController : Controller
     {
         // This route is for GET requests to the main URL ({base url}/api/demo/) with no parameters.
         [HttpGet]
@@ -20,7 +23,8 @@ namespace artshop.Server.Controllers
         [HttpGet("{quotation}")]
         public String OtherRoute(String quotation)
         {
-            return "hello " + quotation;
+            // Remember to encode any user-supplied data appropriately (in this case, using HTML)
+            return HtmlEncoder.Default.Encode($"hello {quotation}");
         }
 
         // This route handles POST requests to the main URL. Any POST requests to the URL with no further specification go here.
@@ -28,6 +32,23 @@ namespace artshop.Server.Controllers
         public int TestPost(int number)
         {
             return number * 10;
+        }
+
+        [HttpPost]
+        public void AddValue(DemoModel model)
+        {
+            return;
+        }
+    }
+
+    [Route("api/db")]
+    public class DemoModelController : Controller
+    {
+        private readonly DemoModelContext _context;
+
+        public DemoModelController(DemoModelContext context)
+        {
+            _context = context;
         }
     }
 }
