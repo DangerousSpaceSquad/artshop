@@ -42,11 +42,11 @@ namespace artshop.Server.Controllers
     }
 
     [Route("api/db")]
-    public class MoviesController : Controller
+    public class DemoModelController : Controller
     {
-        private readonly MvcMovieContext _context;
+        private readonly DemoModelContext _context;
 
-        public MoviesController(MvcMovieContext context)
+        public DemoModelController(DemoModelContext context)
         {
             _context = context;
         }

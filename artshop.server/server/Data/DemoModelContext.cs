@@ -3,7 +3,7 @@ using artshop.Server.Models;
 
 namespace artshop.Server.Data;
 
-class DemoModelContext : DbContext
+public class DemoModelContext : DbContext
 {
     public DemoModelContext(DbContextOptions<DemoModelContext> options) : base(options) { }
 

@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using artshop.Server.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
