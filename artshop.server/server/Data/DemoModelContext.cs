@@ -5,7 +5,19 @@ namespace artshop.Server.Data;
 
 public class DemoModelContext : DbContext
 {
-    public DemoModelContext(DbContextOptions<DemoModelContext> options) : base(options) { }
+    public DbSet<DemoModel> DemoModels { get; set; }
 
-    public DbSet<DemoModel> DemoModels => Set<DemoModel>();
+    public string DbPath { get; }
+
+    public DemoModelContext()
+    {
+        var folder = Environment.SpecialFolder.LocalApplicationData;
+        var path = Environment.GetFolderPath(folder);
+        DbPath = System.IO.Path.Join(path, "demo.db");
+    }
+
+    // The following configures EF to create a Sqlite database file in the
+    // special "local" folder for your platform.
+    protected override void OnConfiguring(DbContextOptionsBuilder options)
+        => options.UseSqlite($"Data Source={DbPath}");
 }

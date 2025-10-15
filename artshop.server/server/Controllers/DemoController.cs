@@ -33,12 +33,6 @@ namespace artshop.Server.Controllers
         {
             return number * 10;
         }
-
-        [HttpPost]
-        public void AddValue(DemoModel model)
-        {
-            return;
-        }
     }
 
     [Route("api/db")]
@@ -49,6 +43,44 @@ namespace artshop.Server.Controllers
         public DemoModelController(DemoModelContext context)
         {
             _context = context;
+        }
+
+        [HttpPost]
+        async public Task TestCreate(int id, int value)
+        {
+            DemoModel demoModel = new DemoModel{Id=id, Value=value};
+            _context.Add(demoModel);
+            await _context.SaveChangesAsync();
+        }
+
+        [HttpGet("{id}")]
+        async public Task<DemoModel?> TestRead(int id)
+        {
+            return await _context.DemoModels.FindAsync(id);
+        }
+
+        [HttpPost]
+        async public Task TestUpdate(int id, int newValue)
+        {
+            DemoModel? demoModel = await _context.DemoModels.FindAsync(id);
+            if (demoModel is null)
+            {
+                throw new Exception($"DemoModel {id} does not exist.");
+            }
+            demoModel.Value = newValue;
+           await _context.SaveChangesAsync();
+        }
+
+        [HttpPost]
+        async public Task TestDelete(int id)
+        {
+            DemoModel? demoModel = await _context.DemoModels.FindAsync(id);
+            if (demoModel is null)
+            {
+                throw new Exception($"DemoModel {id} does not exist.");
+            }
+            _context.Remove(demoModel);
+            await _context.SaveChangesAsync();
         }
     }
 }
