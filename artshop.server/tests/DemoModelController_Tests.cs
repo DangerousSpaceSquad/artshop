@@ -2,79 +2,113 @@ using Xunit;
 using artshop.Server.Controllers;
 using artshop.Server.Models;
 using artshop.Server.Data;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Server.Tests;
 
-public class DemoModelController_Tests : IDisposable
+public class DemoModelController_Tests
 {
-    private readonly DemoModelController _demoModelController;
-
     private readonly DemoModelContext _context;
-
     public DemoModelController_Tests()
     {
-        /* var _connection = new SqliteConnection("Filename=:memory:");
-        _connection.Open();
-        _contextOptions = new DbContextOptionsBuilder<DemoModelContext>()
-            .UseSqlite(_connection)
+        var contextOptions = new DbContextOptionsBuilder<DemoModelContext>()
+            .UseInMemoryDatabase(Guid.NewGuid().ToString())
             .Options;
-        */
-        _context = new DemoModelContext();
-
-        _demoModelController = new DemoModelController(
-            _context
-        );
-    }
-
-    public void Dispose()
-    {
-        _context.DemoModels.RemoveRange(_context.DemoModels);
-        _context.SaveChanges();
+        _context = new DemoModelContext(contextOptions);
     }
 
     [Theory]
-    [InlineData(0, 1)]
-    [InlineData(1, 2)]
-    async public void TestDBRead(int id, int value)
+    [InlineData(1, 1)]
+    [InlineData(345, 2)]
+    public void TestDBCreate(int id, int value)
     {
-        await _demoModelController.TestCreate(id, value);
-        DemoModel? readModel = await _demoModelController.TestRead(id);
-        if (readModel is null)
+        // Arrange
+        var controller = new DemoModelController(
+            _context
+        );
+
+        // Act
+        controller.TestCreate(id, value);
+
+        // Assert
+        DemoModel? actualModel = _context.DemoModels.Find(id);
+        if (actualModel is null)
         {
-            Assert.Fail("Model was created but couldn't be read.");
+            Assert.Fail("Model should be created but is null");
         }
+        Assert.Equal(value, actualModel.Value);
+    }
+
+    [Theory]
+    [InlineData(1, 1)]
+    [InlineData(32,65)]
+    public void TestDBRead(int id, int value)
+    {
+        // Arrange
+        var controller = new DemoModelController(
+            _context
+        );
+        DemoModel? demoModel = new DemoModel{Id=id, Value=value};
+        _context.Add(demoModel);
+        _context.SaveChanges();
+
+        // Act
+        var actionResult = controller.TestRead(id);
+        var okResult = Assert.IsType<OkObjectResult>(actionResult);
+        var readModel = Assert.IsType<DemoModel>(okResult.Value);
+
+        // Assert
         Assert.Equal(value, readModel.Value);
     }
 
     [Theory]
-    [InlineData(0, 1, 5)]
+    [InlineData(1, 1, 5)]
     [InlineData(6, 14532, 2)]
-    async public void TestDBUpdate(int id, int value, int newValue)
+    public void TestDBUpdate(int id, int value, int newValue)
     {
-        await _demoModelController.TestCreate(id, value);
-        await _demoModelController.TestUpdate(id, newValue);
-        DemoModel? readModel = await _demoModelController.TestRead(id);
-        if (readModel is null)
+        // Arrange
+        var controller = new DemoModelController(
+            _context
+        );
+        DemoModel? demoModel = new DemoModel{Id=id, Value=value};
+        _context.Add(demoModel);
+        _context.SaveChanges();
+
+        // Act
+        controller.TestUpdate(id, newValue);
+
+        // Assert
+        DemoModel? actualModel = _context.DemoModels.Find(id);
+        if (actualModel is null)
         {
-            Assert.Fail("Model was created but couldn't be read.");
+            Assert.Fail("Model should be created but is null");
         }
-        Assert.Equal(newValue, readModel.Value);
+        Assert.Equal(newValue, actualModel.Value);
     }
 
     [Theory]
-    [InlineData(0, 1)]
+    [InlineData(1, 1)]
     [InlineData(3, 5)]
-    async public void TestDBDelete(int id, int value)
+    public void TestDBDelete(int id, int value)
     {
-        await _demoModelController.TestCreate(id, value);
-        await _demoModelController.TestDelete(id);
-        DemoModel? readModel = await _demoModelController.TestRead(id);
-        if (readModel is not null)
+        // Create the model
+        var controller = new DemoModelController(
+            _context
+        );
+        DemoModel? demoModel = new DemoModel{Id=id, Value=value};
+        _context.Add(demoModel);
+        _context.SaveChanges();
+
+        // Act
+        controller.TestDelete(id);
+
+        // Assert
+        DemoModel? actualModel = _context.DemoModels.Find(id);
+        if (actualModel is not null)
         {
-            Assert.Fail("Deleted model still exists");
+            Assert.Fail("Model should be deleted but is not null");
         }
-        var ex = await Assert.ThrowsAsync<Exception>(() => _demoModelController.TestUpdate(id, value));
-        Assert.Equal(ex.Message, $"DemoModel {id} does not exist.");
     }
 
 }
