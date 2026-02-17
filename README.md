@@ -48,12 +48,16 @@ To run the website locally, follow these steps. These steps describe running the
 ### Installation
 
 1. Ensure that you have Docker running.
-2. Run `./deployment/run.sh` from the `artshop` directory, in Bash.
-3. Connect to <http://localhost:8080> in your web browser of choice.
+2. Configure the necessary secrets:
+    * Create a new directory in `artshop/` called `.env`
+    * In `artshop/.env/`, create a new file called `secrets.config`
+    * In this file, write the following: `SQUARE_TOKEN={YOUR_TOKEN_HERE}`, and add your personal (sandbox) token for the Square API.
+3. Run `./deployment/run.sh` from the `artshop` directory, in Bash.
+4. Connect to <http://localhost:8080> in your web browser of choice.
 
 ## Contributing
 
-If you've been invited to collaborate, check the GitHub Project to see what features need to be added. To add a feature, take the following steps:
+If you've been invited to collaborate, check the GitHub Project to see what features need to be added. To add a feature, after ensuring that you can run the project normally (see above), take the following steps:
 
 1. [Create a new branch](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-and-deleting-branches-within-your-repository). There are lots of ways to do this, but if you've already downloaded/cloned the project, the easiest is:  
     * With the project open in VSCode,  

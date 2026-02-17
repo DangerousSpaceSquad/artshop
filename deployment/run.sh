@@ -1,5 +1,11 @@
 #!/bin/bash
 TAG=artshop:latest
+if [ ! -f .env/secrets.config ]
+then
+    echo "Secrets file not found. Ensure that 'artshop/.env/secrets.config' exists, and that you're running this script from the 'artshop/' directory."
+    exit 1
+fi
+source .env/secrets.config
 MODE=$1
 if [ -z "$MODE" ]
 then
