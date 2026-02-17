@@ -15,12 +15,13 @@ var app = builder.Build();
 app.UseDefaultFiles();
 app.UseStaticFiles();
 
+// TODO: Disable Swagger for production.
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
+//if (app.Environment.IsDevelopment())
+//{
     app.UseSwagger();
     app.UseSwaggerUI();
-}
+//}
 
 // app.UseHttpsRedirection();
 
