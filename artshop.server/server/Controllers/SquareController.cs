@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
-using System.Text.Encodings.Web;
 
 using Square;
 using Square.Checkout.PaymentLinks;
 using Square.Catalog;
 using Square.Core;
+using Square.Catalog.Object;
 
 using artshop.Server.Models;
 
@@ -50,7 +50,7 @@ public class SquareController : Controller
     /// </summary>
     /// <returns>A list of CatalogObjectDisplay objects, which have minimal information about each item in the Square catalog</returns>
     /// <exception cref="SquareException">If an item retrieved from the Square API doesn't match the expected type</exception>
-    [HttpGet("ListCatalog")]
+    [HttpGet("ListCatalogItemsForDisplay")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<List<CatalogObjectDisplay>> ListCatalogItemsForDisplay()
     {
@@ -69,7 +69,7 @@ public class SquareController : Controller
                 // If the item has no data, skip it
                 CatalogObjectItem retrievedItem = item.AsItem();
                 if (retrievedItem.ItemData == null) continue;
-                
+
                 CatalogObjectDisplay displayObject = new()
                 {
                     ItemId = retrievedItem.Id,
@@ -93,6 +93,19 @@ public class SquareController : Controller
         PairImagesToCatalogDisplayObjects(displayObjects, catalogImages);
 
         return displayObjects;
+    }
+
+    [HttpGet("GetCatalogItem/{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetCatalogItem(string? id)
+    {
+        var resp = await client.Catalog.Object.GetAsync(
+            new GetObjectRequest{
+                ObjectId = id ?? ""
+            }
+        );
+        return resp == null ? NotFound() : Ok(resp);
     }
 
     [HttpGet("ListLocations")]
