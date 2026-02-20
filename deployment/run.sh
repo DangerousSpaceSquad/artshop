@@ -16,7 +16,7 @@ echo $MODE
 if [ "$MODE" == "STAGE" ]
 then
     ./deployment/scripts/containerize.sh $TAG && \
-    ./deployment/scripts/run_docker.sh $TAG
+    . ./deployment/scripts/run_docker.sh $TAG
 elif [ "$MODE" == "DEBUG" ]
 then
     ./deployment/scripts/run_no_docker.sh

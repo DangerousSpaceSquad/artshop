@@ -11,7 +11,7 @@ namespace artshop.Server.Controllers;
 public class SquareController : Controller
 {
     // A WIP controller for the connection to the Square API. Expect routes to be deleted and added in the near future.
-    private SquareClient client;
+    private readonly SquareClient client;
     public SquareController()
     {
         client = new SquareClient(
