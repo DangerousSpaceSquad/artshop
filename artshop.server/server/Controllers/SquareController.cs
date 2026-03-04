@@ -44,6 +44,27 @@ public class SquareController : Controller
             displayObject.ImageURL = imageData.Url;
         }
     }
+    // TODO: Add caching - Locations change extremely rarely.
+    /// <summary>
+    /// Get a valid Location ID from the Square API.
+    /// </summary>
+    /// <returns>A string ID for a valid Location for this Square account</returns>
+    /// <exception cref="SquareException">In case a valid location cannot be identified</exception>
+    private async Task<string> GetLocationId()
+    {
+        var response = await client.Locations.ListAsync();
+        if (response.Locations == null)
+        {
+            // TODO: Try the call multiple times on failure
+            throw new SquareException("No Locations were found in Square.");
+        }
+        Location location = response.Locations.First();
+        if (location.Id == null)
+        {
+            throw new SquareException("A Location was found in Square, but it has no Id.");
+        }
+        return location.Id;
+    }
 
     /// <summary>
     /// Retrieve an overview of all items in the catalog for display.
@@ -95,6 +116,7 @@ public class SquareController : Controller
         return displayObjects;
     }
 
+    // TODO: Revise this method to filter the response to just the relevant details
     [HttpGet("GetCatalogItem/{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -108,46 +130,48 @@ public class SquareController : Controller
         return resp == null ? NotFound() : Ok(resp);
     }
 
-    [HttpGet("ListLocations")]
+    /// <summary>
+    /// Create a payment link for a given order, allowing a user to purchase an arbitrary collection of items
+    /// </summary>
+    /// <param name="lineItems">A list of LineItems to purchase, including their Variation IDs and quantities of each</param>
+    /// <returns>The URL of the payment link to direct the user to</returns>
+    /// <exception cref="SquareException">If the Square API doesn't return the expected results</exception>
+    [HttpPost("CreatePaymentLink")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ListLocationsResponse> ListLocations()
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [Consumes("application/json")]
+    public async Task<string> CreatePaymentLink([FromBody] List<LineItem> lineItems)
     {
-        var locations = await client.Locations.ListAsync();
-        return locations;
-    }
-    
-    [HttpGet("ListLinks")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<List<PaymentLink>> ListLinks()
-    {
-        var pager = await client.Checkout.PaymentLinks.ListAsync(
-            new ListPaymentLinksRequest()
-        );
-
-        List<PaymentLink> customerList = [];
-        await foreach (var customer in pager)
+        if (!ModelState.IsValid)
         {
-            customerList.Add(customer);
+            BadRequest("The request does not conform to the LineItem schema");
         }
-        return customerList;
-    }
 
-    [HttpGet("CreateLink")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<PaymentLink> CreateLink()
-    {
-        var linkResponse =  await client.Checkout.PaymentLinks.CreateAsync(
-            new CreatePaymentLinkRequest{
-                QuickPay = new QuickPay{
-                    Name = "Test Link",
-                    PriceMoney = new Money{
-                        Amount = 100,
-                        Currency = Currency.Usd
-                    },
-                    LocationId = "TODO"
+        List<OrderLineItem> processedLineItems = [];
+        foreach (LineItem lineItem in lineItems)
+        {
+            processedLineItems.Add(new OrderLineItem()
+            {
+                Quantity = lineItem.Quantity.ToString(),
+                CatalogObjectId = lineItem.Id,
+                ItemType = OrderLineItemItemType.Item
+            });
+        }
+
+        var linkResponse = await client.Checkout.PaymentLinks.CreateAsync(
+            new CreatePaymentLinkRequest
+            {
+                Order = new Order
+                {
+                    LocationId = await GetLocationId(),
+                    LineItems = processedLineItems
                 }
             }
-        );
-        return linkResponse.PaymentLink;
+        ) ?? throw new SquareException("The payment link request failed to generate a valid response from Square");
+        // TODO: Handle Square errors in a more graceful way.
+        if (linkResponse.PaymentLink == null) throw new SquareException("The payment link was created, but was invalid due to a Square error");
+        if (linkResponse.PaymentLink.Url == null) throw new SquareException("The payment link was created, but it did not generate a valid URL");
+        
+        return linkResponse.PaymentLink.Url;
     }
 }
