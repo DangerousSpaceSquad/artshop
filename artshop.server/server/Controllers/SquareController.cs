@@ -31,10 +31,10 @@ public class SquareController : Controller
     /// <param name="catalogObjectDisplays">The list of CatalogObjectDisplay objects to add images to</param>
     /// <param name="catalogImageDict">The dictionary of CatalogObjectImages to pull image URLs from</param>
     private static void PairImagesToCatalogDisplayObjects(
-        List<CatalogObjectDisplay> catalogObjectDisplays,
+        List<CatalogVariationDisplay> catalogObjectDisplays,
         Dictionary<string, CatalogObjectImage> catalogImageDict)
     {
-        foreach (CatalogObjectDisplay displayObject in catalogObjectDisplays)
+        foreach (CatalogVariationDisplay displayObject in catalogObjectDisplays)
         {
             if (displayObject.ImageId == null || !catalogImageDict.ContainsKey(displayObject.ImageId)) continue;
             CatalogImage? imageData = catalogImageDict[displayObject.ImageId].ImageData;
@@ -44,6 +44,45 @@ public class SquareController : Controller
             displayObject.ImageURL = imageData.Url;
         }
     }
+
+    /// <summary>
+    /// Given an item from the Square catalog, retrieve all contained Variations for display
+    /// </summary>
+    /// <param name="item"></param>
+    /// <returns></returns>
+    private static List<CatalogVariationDisplay> GetDisplayVariationsFromItem(CatalogObject item)
+    {
+        // Note: There's no particular reason this needs to retrieve *display* variations instead of Square ItemVariations, besides ease of implementation.
+        // If it's justified in the future, consider refactoring accordingly.
+        List<CatalogVariationDisplay> displayVariations = [];
+
+        CatalogObjectItem retrievedItem = item.AsItem();
+        if (retrievedItem.ItemData == null) return displayVariations;
+
+        var variations = retrievedItem.ItemData.Variations;
+        if (variations == null) return displayVariations;
+
+        foreach (CatalogObject variation in variations)
+        {
+            CatalogObjectItemVariation retrievedVariation = variation.AsItemVariation();
+            if (retrievedVariation.ItemVariationData == null) continue;
+            if (retrievedVariation.ItemVariationData.PriceMoney == null) continue;
+
+            CatalogVariationDisplay displayObject = new()
+            {
+                ItemId = retrievedItem.Id,
+                VariationId = retrievedVariation.Id,
+                ItemName = retrievedItem.ItemData.Name ?? "ERROR: Item name not found",
+                VariationName = retrievedVariation.ItemVariationData.Name,
+                Price = retrievedVariation.ItemVariationData.PriceMoney,
+                DescriptionHTML = retrievedItem.ItemData.DescriptionHtml ?? "ERROR: Item description not found",
+                ImageId = retrievedItem.ItemData.ImageIds?.First()
+            };
+            displayVariations.Add(displayObject);
+        }
+        return displayVariations;
+    }
+
     // TODO: Add caching - Locations change extremely rarely.
     /// <summary>
     /// Get a valid Location ID from the Square API.
@@ -71,35 +110,24 @@ public class SquareController : Controller
     /// </summary>
     /// <returns>A list of CatalogObjectDisplay objects, which have minimal information about each item in the Square catalog</returns>
     /// <exception cref="SquareException">If an item retrieved from the Square API doesn't match the expected type</exception>
-    [HttpGet("ListCatalogItemsForDisplay")]
+    [HttpGet("ListCatalogVariationsForDisplay")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<List<CatalogObjectDisplay>> ListCatalogItemsForDisplay()
+    public async Task<List<CatalogVariationDisplay>> ListCatalogVariationsForDisplay()
     {
         Pager<CatalogObject> catalogItems = await client.Catalog.ListAsync(
             new ListCatalogRequest{
                 Types = "ITEM,IMAGE"
             }
         );
-        List<CatalogObjectDisplay> displayObjects = new();
+        List<CatalogVariationDisplay> displayObjects = new();
         Dictionary<string, CatalogObjectImage> catalogImages = new();
 
         await foreach (CatalogObject item in catalogItems)
         {
             if (item.IsItem)
             {
-                // If the item has no data, skip it
-                CatalogObjectItem retrievedItem = item.AsItem();
-                if (retrievedItem.ItemData == null) continue;
-
-                CatalogObjectDisplay displayObject = new()
-                {
-                    ItemId = retrievedItem.Id,
-                    Name = retrievedItem.ItemData.Name ?? "ERROR: Item name not found",
-                    DescriptionHTML = retrievedItem.ItemData.DescriptionHtml ?? "ERROR: Item description not found",
-                    ImageId = retrievedItem.ItemData.ImageIds?.First()
-                };
-
-                displayObjects.Add(displayObject);
+                var retrievedVariations = GetDisplayVariationsFromItem(item);
+                displayObjects.AddRange(retrievedVariations);
             }
             else if (item.IsImage)
             {
