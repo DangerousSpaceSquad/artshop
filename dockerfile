@@ -16,8 +16,8 @@ RUN dotnet tool install --global dotnet-ef
 ENV PATH="$PATH:/root/.dotnet/tools"
 
 WORKDIR /App
-COPY ./artshop.server/server ./artshop.server/server/
-COPY ./artshop.client ./artshop.client/
+COPY artshop.server/server artshop.server/server/
+COPY artshop.client artshop.client/
 WORKDIR artshop.server/server
 RUN dotnet publish --configuration Release -o out
 # TODO: Remove this line, see above todo.
