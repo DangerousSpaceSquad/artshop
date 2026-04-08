@@ -17,6 +17,9 @@ export default function Home() {
                 <ImageSlider imageUrls={CAROUSEL_IMAGES} />
 
             </div>
+            <div className="header">
+                Featured Items
+            </div>
             <div className="shop-grid">
                 <ShopItem />
                 <ShopItem />

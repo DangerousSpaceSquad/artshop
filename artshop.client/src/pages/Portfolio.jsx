@@ -13,7 +13,7 @@ const GALLERY_IMAGES = [gal1, gal2, gal3, gal4, gal5, gal1, gal2, gal3, gal4, ga
 export default function Home() {
     return (
         <div>
-            <h1 className= 'gallery-name'>Gallery</h1>
+            <h1 style = {{color: "#1E1B18"}} className= 'gallery-name'>Gallery</h1>
             <ImageGallery imageUrls={GALLERY_IMAGES} />
         </div>
     )

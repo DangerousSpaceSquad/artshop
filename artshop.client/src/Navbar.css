@@ -7,12 +7,15 @@ body {
   margin: 0;
 }
 
+
+
+
 .nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #F689A2;
-    color: #fff;
+    background-color: #232122;
+    color: #F8E585;
     padding: 0.5rem;
     padding-right: 1rem;
     gap: 1rem;
@@ -22,6 +25,12 @@ body {
     top: 0px;
     z-index: 99;
   }
+
+  @media (width < 750px) {
+  .nav{
+    display: none;
+  }
+}
 
   .navbar-left{
     justify-content: start;
@@ -41,11 +50,29 @@ body {
     list-style: none;
     display: flex;
     gap: 1rem;
+    object-fit: contain;
   }
+
+  .navbar-left svg{
+    height: 1.5rem;
+    fill: #F8E585;
+  }
+
+  .navbar-left svg:hover{
+    fill: #A68383;
+  }
+
   .nav a{
     color: inherit;
     text-decoration: none;
   }
   .nav li:hover {
     color: #A68383;
+    fill: #A68383;
+  }
+
+  .navbar-right .cart{
+    height: 40px;
+    width: 40px; 
+    
   }

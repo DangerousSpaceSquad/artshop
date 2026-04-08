@@ -1,8 +1,9 @@
 // import { useEffect, useState } from 'react';
 import './App.css';
 import Navbar from "./Navbar";
+import Hamburger from "./Hamburger";
 
-import footerLogo from "./assets/Logo2023Transparent.png"
+import footerLogo from "./assets/Logo2026Transparent.png"
 
 import Home from "./pages/Home"
 import Shop from "./pages/Shop"
@@ -33,13 +34,13 @@ function App() {
     }
     return (
 
-        <div>
+        <div className="comp">
             <div className="banner-image"></div>
             <Navbar />
-            {component}
+            <Hamburger />
+            <div >{component}</div>
             <div className="footer">
                 <img
-                    style={{ width: "20%", height: "auto" }}
                     src={footerLogo} className="footer-logo" />
                 <p>Copyright 2025. All rights reserved.</p>
             </div>
