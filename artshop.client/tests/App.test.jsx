@@ -1,5 +1,5 @@
-import { describe, it, expect } from 'vitest'
-import { render, screen } from '@testing-library/react'
+import { describe, it } from 'vitest'
+import { render } from '@testing-library/react'
 import App from '../src/App.jsx'
 
 // describe() defines a test suite, which is a collection of tests with a related purpose, like tests for

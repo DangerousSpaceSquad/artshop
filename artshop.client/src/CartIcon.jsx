@@ -5,7 +5,7 @@ import { useState } from "react"
 
 export default function Cart() {
 
-    const [itemCount, setItemCount] = useState(1)
+    const [itemCount] = useState(1)
 
     return(
         <div className="cart">
@@ -16,7 +16,6 @@ export default function Cart() {
                 {itemCount}
               </div>
         </div>
-
         
     )
 }
