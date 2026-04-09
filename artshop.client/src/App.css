@@ -8,21 +8,41 @@
     font-family: Lilita One;
 }
 .banner-image {
-    background-image: url('assets/banner.jpg');
-    height: 200px;
+    background-image: url('assets/WebsiteBanner2026.png');
+    aspect-ratio: 5 / 1;
+    width: 100vw;
     background-position: center;
     background-size: cover;
 }
 
 .footer{
     display: grid;
-    background-color: #F689A2;
-    color: #fff;
+    grid-template-columns: auto;
+    grid-template-rows: 150px auto;
+    background-color: #232122;
+    color: #F8E585;
     padding: 1rem;
-    height: 200px;
-    max-width: 100%;
+
+    bottom: 0;
+    width: 100%;
     place-items: center;
     box-shadow: 0px -4px 5px 5px rgba(0, 0, 0, 0.259);
     z-index: 99;
+}
+
+.footer img{
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.comp{
+
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+    height: 100%;
+    width: 100%;
 }
 

@@ -1,3 +1,39 @@
+.filter-panel{
+    position: absolute;
+    padding: 2rem;
+    width: 20%;
+    height: 80%;
+    color: #232122;
+        line-height: 1rem;
+}
+
+@media (width <= 750px){
+    .shop{
+        display: grid;
+        grid-template-rows: auto auto;
+    }
+    .filter-panel{
+        position: relative;
+    }
+}
+
+.filter-panel ul{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.filter-panel h1{
+    font-size: 4rem;
+}
+
+.filter-panel h2{
+    font-size: 3rem;
+}
+
+.filter-panel ul li:hover{
+    color: #C97C5D;
+}
+
 .shop-grid {
     box-sizing: border-box;
     display: grid;

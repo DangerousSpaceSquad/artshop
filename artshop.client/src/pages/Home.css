@@ -13,6 +13,13 @@
     padding: 20px;
 }
 
+.header{
+    display: flex;
+    justify-content: center;
+    color: #1E1B18;
+    font-size: 3rem;
+}
+
 @media only screen and (max-width: 600px) {
     .shop-grid {
         grid-template-columns: auto;

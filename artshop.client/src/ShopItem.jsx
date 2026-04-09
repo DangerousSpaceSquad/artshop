@@ -3,13 +3,15 @@ import './ShopItem.css'
 
 export default function ShopItem() {
     return (
-        <div className = "item-container">
-            <img className = "item-img" src= {testImg}/>
-            <div className = "name-bar">
-                <a href="/itempage" ><h1>Test Item</h1></a>
+        <a href="/itempage" >
+            <div className = "item-container">
+                <img className = "item-img" src= {testImg}/>
+                <div className = "name-bar">
+                    <h1>Test Item</h1>
                 <p> $10.00 </p>
             </div>
-        </div>
+            </div>
+        </a>
 
     )
 }
