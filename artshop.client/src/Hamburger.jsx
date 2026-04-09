@@ -2,9 +2,6 @@ import React from "react"
 import { useState } from "react"
 import './Hamburger.css';
 import Cart from "./CartIcon"
-import instagram from './assets/Icons/instagram.svg'
-import twitter from './assets/Icons/x.svg'
-import deviantart from './assets/Icons/deviantart.svg'
 export default function Hamburger() {
 
     const [hamOpen, setHamOpen] = useState(false);
