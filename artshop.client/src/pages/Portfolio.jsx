@@ -3,16 +3,16 @@ import { ImageGallery } from "../ImageGallery";
 
 
 const GALLERY_IMAGES = [
-    '../assets/GalleryImages/Bowsette2024Final.jpg',
-    '../assets/GalleryImages/BulmaFinal.jpg',
-    '../assets/GalleryImages/Cammy2026Final.jpg',
-    '../assets/GalleryImages/Chun-li2024FinalV3.jpg',
-    '../assets/GalleryImages/Day2RosalinaShaded.jpg',
-    '../assets/GalleryImages/Day10MirkoFinal.jpg',
-    '../assets/GalleryImages/JaneDoeFinalNoText.jpg',
-    '../assets/GalleryImages/MiguFinal.jpg',
-    '../assets/GalleryImages/SandyBashFinal.jpg',
-    '../assets/GalleryImages/YoruichiFinal.jpg',
+    '/src/assets/GalleryImages/Bowsette2024Final.jpg',
+    '/src/assets/GalleryImages/BulmaFinal.jpg',
+    '/src/assets/GalleryImages/Cammy2026Final.jpg',
+    '/src/assets/GalleryImages/Chun-li2024FinalV3.jpg',
+    '/src/assets/GalleryImages/Day2RosalinaShaded.jpg',
+    '/src/assets/GalleryImages/Day10MirkoFinal.jpg',
+    '/src/assets/GalleryImages/JaneDoeFinalNoText.jpg',
+    '/src/assets/GalleryImages/MiguFinal.jpg',
+    '/src/assets/GalleryImages/SandyBashFinal.jpg',
+    '/src/assets/GalleryImages/YoruichiFinal.jpg',
 ]
 
 export default function Home() {
