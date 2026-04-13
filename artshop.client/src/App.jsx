@@ -10,7 +10,7 @@ import Shop from "./pages/Shop"
 import About from "./pages/About"
 import Portfolio from "./pages/Portfolio"
 import ItemPage from "./pages/ItemPage"
-
+import Cart from "./pages/Cart"
 
 
 function App() {
@@ -30,6 +30,8 @@ function App() {
             break
         case "/itempage":
             component = <ItemPage />
+        case "/cart":
+            component = <Cart />
             break
     }
     return (
