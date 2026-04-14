@@ -160,6 +160,10 @@
     transition: scale 100ms ease-in-out;
 }
 
+.item-description{
+    text-wrap: wrap;
+}
+
 
 
 

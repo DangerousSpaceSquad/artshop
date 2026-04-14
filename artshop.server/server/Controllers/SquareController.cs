@@ -19,7 +19,7 @@ public class SquareController : Controller
     {
         client = new SquareClient(
             clientOptions: new ClientOptions{
-                BaseUrl = SquareEnvironment.Sandbox
+                BaseUrl = SquareEnvironment.Production
             }
         );
     }
@@ -150,11 +150,13 @@ public class SquareController : Controller
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetCatalogItem(string? id)
     {
-        var resp = await client.Catalog.Object.GetAsync(
+        GetCatalogObjectResponse resp = await client.Catalog.Object.GetAsync(
             new GetObjectRequest{
-                ObjectId = id ?? ""
+                ObjectId = id ?? "",
+                IncludeRelatedObjects = true
             }
         );
+
         return resp == null ? NotFound() : Ok(resp);
     }
 

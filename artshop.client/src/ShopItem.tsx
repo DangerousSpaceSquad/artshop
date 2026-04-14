@@ -1,14 +1,15 @@
 import './ShopItem.css'
 
-interface displayItem {
+interface DisplayItem {
     imgSrc: string,
     title: string,
-    priceCents: number
+    priceCents: number,
+    itemId: string
 }
 
-export default function ShopItem({imgSrc, title, priceCents}: Readonly<displayItem>) {
+export default function ShopItem({imgSrc, title, priceCents, itemId}: Readonly<DisplayItem>) {
     return (
-        <a href="/itempage" >
+        <a href={"/itempage?itemId=" + itemId} >
             <div className = "item-container">
                 <img className = "item-img" src= {imgSrc}/>
                 <div className = "name-bar">
