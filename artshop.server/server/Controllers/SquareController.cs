@@ -141,7 +141,19 @@ public class SquareController : Controller
 
         PairImagesToCatalogDisplayObjects(displayObjects, catalogImages);
 
-        return displayObjects;
+        Dictionary<string, CatalogVariationDisplay> filteredVariations = [];
+        
+        foreach (CatalogVariationDisplay item in displayObjects)
+        {
+            if (!filteredVariations.TryGetValue(item.ItemId, out CatalogVariationDisplay? value) || 
+                    item.Price.Amount >= value.Price.Amount)
+            {
+                filteredVariations[item.ItemId] = item;
+            }
+
+        }
+
+        return filteredVariations.Values.ToList();
     }
 
     // TODO: Revise this method to filter the response to just the relevant details
