@@ -32,7 +32,7 @@ export default function Home() {
                 console.log(data);
                 let catalogItems = []
                 for (const element of data) {
-                    let shopItem = <ShopItem imgSrc={element.imageURL} title={element.itemName} priceCents={element.price.amount}/>
+                    let shopItem = <ShopItem imgSrc={element.imageURL} title={element.itemName} priceCents={element.price.amount} itemId={element.itemId}/>
                     catalogItems.push(shopItem);
                 }
                 console.log(catalogItems);
