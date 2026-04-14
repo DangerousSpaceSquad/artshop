@@ -30,6 +30,7 @@ function App() {
             break
         case "/itempage":
             component = <ItemPage />
+            break
         case "/cart":
             component = <Cart />
             break
