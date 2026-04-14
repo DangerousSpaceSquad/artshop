@@ -4,7 +4,7 @@ export default function About() {
     return (
         <div className="about-container">
             <h1>About</h1>
-            <p>Hello! I'm Telrem and I create pin-up illustrations of beloved characters from anime, games, and other media. I love to push myself to best my previous work and create new and exciting illustrations. Around 2019 my artist journey began and since I have diligently been teaching myself the craft learning a host of relevant skills. If you enjoy my work consider purchasing something from this store to support me as I continue to learn and create awesome art!</p>
+            <p>Hello! I&apos;m Telrem and I create pin-up illustrations of beloved characters from anime, games, and other media. I love to push myself to best my previous work and create new and exciting illustrations. Around 2019 my artist journey began and since I have diligently been teaching myself the craft learning a host of relevant skills. If you enjoy my work consider purchasing something from this store to support me as I continue to learn and create awesome art!</p>
             <h1>FAQ</h1>
             <h2>Q: How long do orders take to ship?</h2>
             <p>I am a one person operation both creating art and handling orders. Orders will be posted the Friday of the week they are ordered though there could be delays due to volume, life occurrences, or delays with the shipping company. Please be patient but if you want an update on your order please email telremart@gmail.com</p>

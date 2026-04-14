@@ -1,4 +1,4 @@
-import './cart.css'
+import './Cart.css'
 import itemImg from "../assets/bigfoot.jpg"
 import { useState } from "react"
 import { ChevronLeft, ChevronRight, Trash } from "lucide-react"
