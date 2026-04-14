@@ -1,14 +1,19 @@
 import './Portfolio.css'
 import { ImageGallery } from "../ImageGallery";
 
-import gal1 from "../assets/bigfoot.jpg"
-import gal2 from "../assets/Demo3.jpg"
-import gal3 from "../assets/Demo4.jpg"
-import gal4 from "../assets/Demo1.jpg"
-import gal5 from "../assets/Demo2.jpg"
 
-
-const GALLERY_IMAGES = [gal1, gal2, gal3, gal4, gal5, gal1, gal2, gal3, gal4, gal5]
+const GALLERY_IMAGES = [
+    '/src/assets/GalleryImages/Bowsette2024Final.jpg',
+    '/src/assets/GalleryImages/BulmaFinal.jpg',
+    '/src/assets/GalleryImages/Cammy2026Final.jpg',
+    '/src/assets/GalleryImages/Chun-li2024FinalV3.jpg',
+    '/src/assets/GalleryImages/Day2RosalinaShaded.jpg',
+    '/src/assets/GalleryImages/Day10MirkoFinal.jpg',
+    '/src/assets/GalleryImages/JaneDoeFinalNoText.jpg',
+    '/src/assets/GalleryImages/MiguFinal.jpg',
+    '/src/assets/GalleryImages/SandyBashFinal.jpg',
+    '/src/assets/GalleryImages/YoruichiFinal.jpg',
+]
 
 export default function Home() {
     return (
