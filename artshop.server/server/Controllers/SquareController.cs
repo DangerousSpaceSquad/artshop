@@ -126,6 +126,12 @@ public class SquareController : Controller
         {
             if (item.IsItem)
             {
+                // TODO: Currently, it's assumed that items without categories are to be excluded from the web store.
+                    // It would be better to use the ecom_visibility property in Square to choose which items to in/exclude.
+                if ((item.AsItem().ItemData?.Categories?.Count() ?? 0) == 0)
+                {
+                    continue;
+                }
                 var retrievedVariations = GetDisplayVariationsFromItem(item);
                 displayObjects.AddRange(retrievedVariations);
             }
