@@ -1,5 +1,6 @@
 import './Navbar.css';
 import Cart from "./CartIcon"
+
 export default function Navbar() {
   return <nav className="nav">
     <div className="navbar-left">
@@ -34,7 +35,7 @@ export default function Navbar() {
     <div className="navbar-right">
       <ul>
         <li>
-          <a href = "/cart"><Cart /></a>
+          <a href = "/cart"><Cart/></a>
         </li>
       </ul>
     </div>

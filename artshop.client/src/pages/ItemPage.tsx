@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react"
 import './ItemPage.css'
 import { ChevronLeft, ChevronRight } from "lucide-react"
+import { useCookies } from 'react-cookie'
 
 export default function ItemPage() {
     const queryParams = new URLSearchParams(globalThis.location.search);
     const itemId = queryParams.get("itemId");
 
+    const [cookies, setCookie] = useCookies(['cart']);
 
     const [quantity, setQuantity] = useState(1)
     const [itemDetails, setItemDetails] = useState();
@@ -14,12 +16,11 @@ export default function ItemPage() {
     
     // Note: Due to issues with SKU being null in the Square API, we're using variation IDs instead.
         // SKU would be preferred, if it worked consistently.
-    const [variationId, setVariationId] = useState(1)
+    const [variationId, setVariationId] = useState("");
     const [skuButtons, setSkuButtons] = useState([]);
 
     useEffect(() => {
         setLoading(true);
-        setItemDetails(null);
 
         fetch(`/api/square/GetCatalogItem/` + itemId)
             .then((resp) => {
@@ -86,6 +87,16 @@ export default function ItemPage() {
         }
     }
 
+    function addToCart(){
+        let cartItems = [];
+        if (cookies.cart) {
+            cartItems = cookies.cart;
+        }
+        for (let i = 0; i < quantity; i++) {
+            cartItems.push(variationId);
+        }
+        setCookie('cart', cartItems);
+    }
 
     return (
         <div className="item">
@@ -103,7 +114,7 @@ export default function ItemPage() {
                     <p>{quantity}</p>
                     <button onClick={IncrementQ} className = "qty-btn" style={{right: 0}}><ChevronRight /></button>
                 </div>
-                <button className = "cart-add-btn" >Add to cart</button>
+                <button className = "cart-add-btn" onClick={addToCart}>Add to cart</button>
                 <div>
                     <h2>Description:</h2>
                     {itemDetails.object.item_data.description_plaintext}

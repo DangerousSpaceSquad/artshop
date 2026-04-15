@@ -1,5 +1,7 @@
-// import { useEffect, useState } from 'react';
 import './App.css';
+
+import { Cookies, CookiesProvider } from 'react-cookie';
+
 import Navbar from "./Navbar";
 import Hamburger from "./Hamburger";
 
@@ -14,8 +16,9 @@ import Cart from "./pages/Cart"
 
 
 function App() {
-    let component
-    switch (window.location.pathname) {
+    let component;
+
+    switch (globalThis.location.pathname) {
         case "/":
             component = <Home />
             break
@@ -29,25 +32,26 @@ function App() {
             component = <Portfolio />
             break
         case "/itempage":
-            component = <ItemPage />
+            component = <ItemPage/>
             break
         case "/cart":
             component = <Cart />
             break
     }
     return (
-
-        <div className="comp">
-            <div className="banner-image"></div>
-            <Navbar />
-            <Hamburger />
-            <div >{component}</div>
-            <div className="footer">
-                <img
-                    src={footerLogo} className="footer-logo" />
-                <p>Copyright 2025. All rights reserved.</p>
+        <CookiesProvider defaultSetOptions={{path: '/'}}>
+            <div className="comp">
+                <div className="banner-image"></div>
+                <Navbar/>
+                <Hamburger />
+                <div >{component}</div>
+                <div className="footer">
+                    <img
+                        src={footerLogo} className="footer-logo" />
+                    <p>Copyright 2025. All rights reserved.</p>
+                </div>
             </div>
-        </div>
+        </CookiesProvider>
     )
 
 }

@@ -1,11 +1,14 @@
 import './CartIcon.css';
 import {ShoppingCart} from "lucide-react"
-import { useState } from "react"
-
+import { useCookies } from 'react-cookie'
 
 export default function Cart() {
-
-    const [itemCount] = useState(1)
+    
+    const [cookies] = useCookies(['cart']);
+    let itemCount = 0;
+    if (cookies.cart){
+        itemCount = cookies.cart.length;
+    }
 
     return(
         <div className="cart">
