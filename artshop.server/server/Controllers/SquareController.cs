@@ -152,7 +152,7 @@ public class SquareController : Controller
         foreach (CatalogVariationDisplay item in displayObjects)
         {
             if (!filteredVariations.TryGetValue(item.ItemId, out CatalogVariationDisplay? value) || 
-                    item.Price.Amount >= value.Price.Amount)
+                    item.Price.Amount <= value.Price.Amount)
             {
                 filteredVariations[item.ItemId] = item;
             }
