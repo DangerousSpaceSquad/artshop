@@ -1,6 +1,6 @@
 import './App.css';
 
-import { Cookies, CookiesProvider } from 'react-cookie';
+import { CookiesProvider } from 'react-cookie';
 
 import Navbar from "./Navbar";
 import Hamburger from "./Hamburger";
