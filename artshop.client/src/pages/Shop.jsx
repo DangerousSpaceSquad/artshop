@@ -29,13 +29,11 @@ export default function Home() {
             })
             // We can use .then() on the output of the prior .then() to handle the output after parsing succeeds
             .then((data) => {
-                console.log(data);
                 let catalogItems = []
                 for (const element of data) {
                     let shopItem = <ShopItem imgSrc={element.imageURL} title={element.itemName} priceCents={element.price.amount} itemId={element.itemId}/>
                     catalogItems.push(shopItem);
                 }
-                console.log(catalogItems);
                 setShopItems(catalogItems);
                 setLoading(false);
             })
