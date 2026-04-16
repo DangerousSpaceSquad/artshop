@@ -1,5 +1,4 @@
 import './Cart.css'
-import itemImg from "../assets/bigfoot.jpg"
 import { useState, useEffect } from "react"
 import { ChevronLeft, ChevronRight, Trash } from "lucide-react"
 import { useCookies } from 'react-cookie'
