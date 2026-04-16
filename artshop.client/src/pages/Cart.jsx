@@ -22,30 +22,33 @@ function cartListToDict(cartList) {
 }
 
 export default function Cart() {
-    const [quantity, setQuantity] = useState(2);
     const [cartItemDetails, setCartItemDetails] = useState([]);
     const [isLoading, setLoading] = useState(false);
-    const [cookies] = useCookies(['cart']);
+    const [cookies, setCookie] = useCookies(['cart']);
 
-    function IncrementQ() {
-        setQuantity(curQuantity => {
-            return curQuantity + 1
-        });
+    function IncrementQ(variationId) {
+        let cartList = cookies.cart;
+        cartList.push(variationId);
+        setCookie('cart', cartList);
     }
 
-    function DecrementQ() {
-        setQuantity(curQuantity => {
-            if (curQuantity > 1) return curQuantity - 1
-            return curQuantity
-        });
+    function DecrementQ(variationId) {
+        let cartList = cookies.cart;
+        let itemIndex = cartList.indexOf(variationId);
+        cartList.splice(itemIndex, 1);
+        setCookie('cart', cartList);
     }
 
+    function removeFromCart(variationId) {
+        let cartList = cookies.cart;
+        let outList = cartList.filter(cartItem => cartItem != variationId);
+        setCookie('cart', outList);
+    }
 
     useEffect(() => {
         async function fetchItemDetails(cartDict) {
             let httpResults = []
             for (let [cartItemId] of Object.entries(cartDict)){
-                // Note: These requests are run in serial, resulting in long load times for large carts. Consider concurrency.
                 httpResults.push(fetch(`/api/square/GetCatalogItem/` + cartItemId));
             }
 
@@ -85,11 +88,8 @@ export default function Cart() {
 
     let cartContents = [];
     let grandTotal = 0;
-    //console.log(cartItemDetails);
 
     for (const cartItem of cartItemDetails) {
-        console.log(cartItem);
-
         let itemName = "ERROR: Item name not found."
         let itemImageSrc = "";
         let priceCents = cartItem.object.item_variation_data.price_money.amount/100;
@@ -105,18 +105,20 @@ export default function Cart() {
         grandTotal += priceCents * cartItem.quantity;
         cartContents.push(
         <tr>
-            <td className='no-indent'><button className='trash-btn'><Trash /></button></td>
+            <td className='no-indent'>
+                <button onClick={() => removeFromCart(cartItem.object.id)}className='trash-btn'><Trash /></button>
+            </td>
             <td className='no-indent'><img className='cart-item-img' src={itemImageSrc} /></td>
             <td className='no-indent'>{itemName}</td>
             <td data-label="Price">${priceCents.toFixed(2)}</td>
             <td data-label="Quantity">
                 <div className="quantity-selector">
-                    <button onClick={DecrementQ} className="cart-qty-btn"><ChevronLeft /></button>
+                    <button onClick={() => DecrementQ(cartItem.object.id)} className="cart-qty-btn"><ChevronLeft /></button>
                     <p>{cartItem.quantity}</p>
-                    <button onClick={IncrementQ} className="cart-qty-btn"><ChevronRight /></button>
+                    <button onClick={() => IncrementQ(cartItem.object.id)} className="cart-qty-btn"><ChevronRight /></button>
                 </div>
             </td>
-            <td data-label="Subtotal">{(priceCents * cartItem.quantity).toFixed(2)}</td>
+            <td data-label="Subtotal">${(priceCents * cartItem.quantity).toFixed(2)}</td>
         </tr>
         );
     }
@@ -144,7 +146,7 @@ export default function Cart() {
                     <td />
                     <td />
                     <td>Estimated total:</td>
-                    <td>{grandTotal.toFixed(2)}</td>
+                    <td>${grandTotal.toFixed(2)}</td>
                 </tr>
             </tbody>
         </table>
