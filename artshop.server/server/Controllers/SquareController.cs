@@ -5,6 +5,7 @@ using Square.Checkout.PaymentLinks;
 using Square.Catalog;
 using Square.Core;
 using Square.Catalog.Object;
+using Square.Inventory;
 
 using artshop.Server.Models;
 
@@ -221,5 +222,24 @@ public class SquareController : Controller
         if (linkResponse.PaymentLink.Url == null) throw new SquareException("The payment link was created, but it did not generate a valid URL");
         
         return linkResponse.PaymentLink.Url;
+    }
+
+    /// <summary>
+    /// Retrieve the counts of all item stock in the inventory
+    /// </summary>
+    /// <returns>The counts of item stocks, as returned by Square</returns>
+    [HttpGet("GetInventoryCounts")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<List<InventoryCount>> GetInventoryCounts()
+    {
+        Pager<InventoryCount> getCountsResponse = await client.Inventory.BatchGetCountsAsync(
+            new BatchGetInventoryCountsRequest()
+        );
+        List<InventoryCount> inventoryCounts = [];
+        await foreach (InventoryCount inventoryCount in getCountsResponse)
+        {
+            inventoryCounts.Add(inventoryCount);
+        }
+        return inventoryCounts;
     }
 }
