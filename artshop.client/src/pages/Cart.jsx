@@ -24,9 +24,15 @@ export default function Cart() {
     const [cartItemDetails, setCartItemDetails] = useState([]);
     const [isLoading, setLoading] = useState(false);
     const [cookies, setCookie, removeCookie] = useCookies(['cart']);
+    const [stockCounts, setStockCounts] = useState({});
 
     function IncrementQ(variationId) {
         let cartList = cookies.cart;
+        let currentCount = 0;
+        for (const cartItem of cartList) {
+            if (cartItem === variationId) currentCount ++;
+        }
+        if (currentCount >= stockCounts[variationId]) return;
         cartList.push(variationId);
         setCookie('cart', cartList);
     }
@@ -68,22 +74,34 @@ export default function Cart() {
         globalThis.location.href = paymentLinkSrc;
     }
 
+    async function fetchItemStockCounts() {
+        let stockCountResponse = await fetch(`/api/square/GetInventoryCount`);
+        if (!stockCountResponse.ok || stockCountResponse.errors) {
+            console.log("Unexpected error while retrieving stock counts");
+            return;
+        }
+        let stockData = await stockCountResponse.json();
+        let stockDict = {};
+        for (const stockItem of stockData) {
+            let trackedStockCount = stockDict[stockItem.catalog_object_id] ?? 0;
+            trackedStockCount += Number.parseInt(stockItem.quantity);
+            stockDict[stockItem.catalog_object_id] = trackedStockCount;
+        }
+        setStockCounts(stockDict);
+    }
+
     useEffect(() => {
         async function fetchItemDetails(cartDict) {
             let httpResults = []
             for (let [cartItemId] of Object.entries(cartDict)){
                 httpResults.push(fetch(`/api/square/GetCatalogItem/` + cartItemId));
             }
-
+            await fetchItemStockCounts();
             await Promise.all(httpResults).then(async (httpResponse) => {
                 let itemsInCart = [];
                 for (const result of httpResponse) {
-                    if (!result.ok) {
-                        console.log("Unexpected HTTP error in response from API");
-                        continue;
-                    }
-                    if (result.errors) {
-                        console.log("Unexpected Square error in response from API");
+                    if (!result.ok || result.errors) {
+                        console.log("Unexpected error while retrieving item details");
                         continue;
                     }
                     let squareItemDetails = (await result.json());
@@ -113,7 +131,7 @@ export default function Cart() {
     let grandTotal = 0;
 
     for (const cartItem of cartItemDetails) {
-        let itemName = "ERROR: Item name not found."
+        let itemName = "ERROR: Item name not found.\n"
         let itemImageSrc = "";
         let priceCents = cartItem.object.item_variation_data.price_money.amount/100;
 
@@ -125,7 +143,14 @@ export default function Cart() {
                 itemImageSrc = relatedObject.image_data.url;
             }
         }
+        itemName += ` (${cartItem.object.item_variation_data.name})`
         grandTotal += priceCents * cartItem.quantity;
+
+        let incrementBtnClass = "cart-qty-btn";
+        if (cartItem.quantity >= stockCounts[cartItem.object.id]) {
+            incrementBtnClass = "cart-qty-btn disabled-qty-btn";
+        }
+
         cartContents.push(
         <tr>
             <td className='no-indent'>
@@ -138,7 +163,7 @@ export default function Cart() {
                 <div className="quantity-selector">
                     <button onClick={() => DecrementQ(cartItem.object.id)} className="cart-qty-btn"><ChevronLeft /></button>
                     <p>{cartItem.quantity}</p>
-                    <button onClick={() => IncrementQ(cartItem.object.id)} className="cart-qty-btn"><ChevronRight /></button>
+                    <button onClick={() => IncrementQ(cartItem.object.id)} className={incrementBtnClass}><ChevronRight /></button>
                 </div>
             </td>
             <td data-label="Subtotal">${(priceCents * cartItem.quantity).toFixed(2)}</td>

@@ -210,6 +210,10 @@
     transition: scale 100ms ease-in-out;
 }
 
+.disabled-qty-btn {
+    cursor: not-allowed;
+}
+
 .checkout-container {
     display: grid;
     justify-content: right;
