@@ -9,7 +9,8 @@ export default function ItemPage() {
 
     const [cookies, setCookie] = useCookies(['cart']);
 
-    const [quantity, setQuantity] = useState(1)
+    const [quantity, setQuantity] = useState(1);
+    const [stockCount, setStockCount] = useState(0);
     const [itemDetails, setItemDetails] = useState();
     const [itemVariationDetails, setItemVariationDetails] = useState();
     const [loading, setLoading] = useState(true);
@@ -43,6 +44,20 @@ export default function ItemPage() {
     }, [itemId]);
 
     useEffect(() => {
+        if (!variationId) return;
+        fetch(`/api/square/GetInventoryCount/` + variationId)
+            .then((resp) => {
+                if (!resp.ok) {
+                    throw new Error("HTTP error");
+                }
+                return resp.text();
+            })
+            .then((data) => {
+                setStockCount(Number.parseInt(data));
+            })
+    }, [variationId]);
+
+    useEffect(() => {
         if (itemDetails) {
             let variations = itemDetails.object.item_data.variations;
             let newSkuButtons = []
@@ -61,6 +76,7 @@ export default function ItemPage() {
 
 
     function IncrementQ() {
+        if (quantity >= stockCount) return;
         setQuantity(curQuantity => {
             return curQuantity + 1
         });
@@ -96,6 +112,12 @@ export default function ItemPage() {
             cartItems.push(variationId);
         }
         setCookie('cart', cartItems);
+        globalThis.location.href = `/shop`;
+    }
+
+    let incrementButtonClass = "qty-btn";
+    if (quantity >= stockCount) {
+        incrementButtonClass = "qty-btn disabled-btn";
     }
 
     return (
@@ -112,7 +134,7 @@ export default function ItemPage() {
                 <div className="quantity-selector">
                     <button onClick={DecrementQ} className = "qty-btn" style={{left: 0}}><ChevronLeft /></button>
                     <p>{quantity}</p>
-                    <button onClick={IncrementQ} className = "qty-btn" style={{right: 0}}><ChevronRight /></button>
+                    <button onClick={IncrementQ} className = {incrementButtonClass} style={{right: 0}}><ChevronRight /></button>
                 </div>
                 <button className = "cart-add-btn" onClick={addToCart}>Add to cart</button>
                 <div>
