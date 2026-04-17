@@ -228,7 +228,7 @@ public class SquareController : Controller
     /// Retrieve the counts of all item stock in the inventory
     /// </summary>
     /// <returns>The counts of item stocks, as returned by Square</returns>
-    [HttpGet("GetInventoryCounts")]
+    [HttpGet("GetInventoryCount")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<List<InventoryCount>> GetInventoryCounts()
     {
@@ -241,5 +241,33 @@ public class SquareController : Controller
             inventoryCounts.Add(inventoryCount);
         }
         return inventoryCounts;
+    }
+
+    /// <summary>
+    /// Retrieve the inventory count for a single item across all locations
+    /// </summary>
+    /// <param name="id">The ID of the item to pull inventory counts for</param>
+    /// <returns>The number of items in stock</returns>
+    [HttpGet("GetInventoryCount/{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetItemInventoryCount(string id)
+    {
+        Pager<InventoryCount> result = await client.Inventory.GetAsync(
+            new GetInventoryRequest{
+                CatalogObjectId = id
+            }
+        );
+
+        int itemCount = 0;
+        bool isItemFound = false;
+        await foreach (InventoryCount inventoryCount in result)
+        {
+            isItemFound = true;
+            itemCount += int.Parse(inventoryCount.Quantity ?? "0", 0);
+        }
+        if (!isItemFound) return NotFound($"No item matching id `{id} was found in any location.");
+        return Ok(itemCount);
+
     }
 }
