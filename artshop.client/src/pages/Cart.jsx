@@ -23,7 +23,7 @@ function cartListToDict(cartList) {
 export default function Cart() {
     const [cartItemDetails, setCartItemDetails] = useState([]);
     const [isLoading, setLoading] = useState(false);
-    const [cookies, setCookie] = useCookies(['cart']);
+    const [cookies, setCookie, removeCookie] = useCookies(['cart']);
 
     function IncrementQ(variationId) {
         let cartList = cookies.cart;
@@ -42,6 +42,30 @@ export default function Cart() {
         let cartList = cookies.cart;
         let outList = cartList.filter(cartItem => cartItem != variationId);
         setCookie('cart', outList);
+    }
+
+    async function checkout() {
+        let cartList = cookies.cart;
+        let cartDict = cartListToDict(cartList);
+        let requestPayload = [];
+        for (let [cartItemId, cartItemQuantity] of Object.entries(cartDict)) {
+            let itemDetails = {};
+            itemDetails.id = cartItemId;
+            itemDetails.quantity = cartItemQuantity;
+            requestPayload.push(itemDetails);
+        }
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(requestPayload)
+        }
+        let paymentLinkCallResult = await fetch(`/api/square/CreatePaymentLink`, requestOptions);
+        if (!paymentLinkCallResult.ok) {
+            console.log("Unexpected HTTP error while fetching payment link");
+        }
+        let paymentLinkSrc = await paymentLinkCallResult.text();
+        removeCookie('cart');
+        globalThis.location.href = paymentLinkSrc;
     }
 
     useEffect(() => {
@@ -151,7 +175,7 @@ export default function Cart() {
         </table>
         <div className='checkout-container'>
             <h3>Taxes, discounts, and shipping calculated at checkout</h3>
-            <button className='checkout-button'>Check out</button>
+            <button onClick={checkout} className='checkout-button'>Check out</button>
         </div>
 
     </div>
