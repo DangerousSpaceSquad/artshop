@@ -160,6 +160,11 @@
     transition: scale 100ms ease-in-out;
 }
 
+.disabled-btn{
+    cursor: not-allowed;
+    color: grey;
+}
+
 .item-description{
     text-wrap: wrap;
 }
