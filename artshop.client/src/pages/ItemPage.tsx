@@ -74,6 +74,17 @@ export default function ItemPage() {
         }
     }, [variationId, itemDetails]);
 
+    useEffect(() => {
+        if (!cookies.cart) return;
+        let currentCartQuantity = 0;
+        for (const cartItem of cookies.cart) {
+            if (cartItem == variationId) {
+                currentCartQuantity++;
+            }
+        }
+        setQuantity(currentCartQuantity);
+    }, [variationId])
+
 
     function IncrementQ() {
         if (quantity >= stockCount) return;
@@ -108,10 +119,11 @@ export default function ItemPage() {
         if (cookies.cart) {
             cartItems = cookies.cart;
         }
+        let filteredCartList = cartItems.filter(cartItem => cartItem != variationId);
         for (let i = 0; i < quantity; i++) {
-            cartItems.push(variationId);
+            filteredCartList.push(variationId);
         }
-        setCookie('cart', cartItems);
+        setCookie('cart', filteredCartList);
         globalThis.location.href = `/shop`;
     }
 
