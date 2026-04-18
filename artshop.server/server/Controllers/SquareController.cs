@@ -213,7 +213,13 @@ public class SquareController : Controller
                 Order = new Order
                 {
                     LocationId = await GetLocationId(),
-                    LineItems = processedLineItems
+                    LineItems = processedLineItems,
+                    PricingOptions = new OrderPricingOptions{
+                        AutoApplyTaxes = true
+                    }
+                },
+                CheckoutOptions = new CheckoutOptions{
+                    AskForShippingAddress = true
                 }
             }
         ) ?? throw new SquareException("The payment link request failed to generate a valid response from Square");
