@@ -48,7 +48,7 @@ function App() {
                 <div className="footer">
                     <img
                         src={footerLogo} className="footer-logo" />
-                    <p>Copyright 2025. All rights reserved.</p>
+                    <p>Copyright 2026. All rights reserved.</p>
                 </div>
             </div>
         </CookiesProvider>
