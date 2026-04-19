@@ -30,11 +30,28 @@
     font-size: 3rem;
 }
 
+.filter-panel button{
+    font-size: 3rem;
+    border: none;
+    background: none;
+    color: black;
+    cursor: pointer;
+}
+
+#filter-panel-header {
+    font-size: 4rem;
+}
+
+.filter-panel button:hover{
+    color:#C97C5D;
+}
+
 .filter-panel ul li:hover{
     color: #C97C5D;
 }
 
 .shop-grid {
+    min-height: 20em;
     box-sizing: border-box;
     display: grid;
     width: 100%;
