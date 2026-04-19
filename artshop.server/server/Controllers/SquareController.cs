@@ -68,6 +68,11 @@ public class SquareController : Controller
             CatalogObjectItemVariation retrievedVariation = variation.AsItemVariation();
             if (retrievedVariation.ItemVariationData == null) continue;
             if (retrievedVariation.ItemVariationData.PriceMoney == null) continue;
+            List<string> categories = [];
+            foreach (CatalogObjectCategory entry in retrievedItem.ItemData.Categories ?? [])
+            {
+                if (entry.Id != null) categories.Add(entry.Id);
+            }
 
             CatalogVariationDisplay displayObject = new()
             {
@@ -77,7 +82,8 @@ public class SquareController : Controller
                 VariationName = retrievedVariation.ItemVariationData.Name,
                 Price = retrievedVariation.ItemVariationData.PriceMoney,
                 DescriptionHTML = retrievedItem.ItemData.DescriptionHtml ?? "ERROR: Item description not found",
-                ImageId = retrievedItem.ItemData.ImageIds?.First()
+                ImageId = retrievedItem.ItemData.ImageIds?.First(),
+                Categories = categories
             };
             displayVariations.Add(displayObject);
         }

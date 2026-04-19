@@ -13,6 +13,7 @@ public class CatalogVariationDisplay
     public required string ItemName { get; set; }
     [AllowNull]
     public required string VariationName { get; set; }
+    public required List<string> Categories { get; set; }
     public required Square.Money Price { get; set; }
 
     [AllowNull]

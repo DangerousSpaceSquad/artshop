@@ -5,6 +5,7 @@ import './Shop.css'
 export default function Home() {
     const [shopItems, setShopItems] = useState();
     const [loading, setLoading] = useState(true);
+    const [selectedCategory, setSelectedCategory] = useState("");
 
     useEffect(() => {
 
@@ -32,6 +33,9 @@ export default function Home() {
 
             let catalogItems = []
             for (const element of catalogData) {
+                if (selectedCategory != "" && !element.categories.includes(selectedCategory)) {
+                    continue;
+                }
                 if (stockDict[element.variationId] <= 0) {
                     continue;
                 }
@@ -44,7 +48,11 @@ export default function Home() {
 
         setLoading(true);
         fetchCatalogItems();
-    }, []);
+    }, [selectedCategory]);
+
+    function selectCategory(categoryId) {
+        setSelectedCategory(categoryId);
+    }
 
     if (loading) {
         return(
@@ -55,16 +63,16 @@ export default function Home() {
     return (
         <div className="shop">
             <div className="filter-panel">
-                <h1>Products</h1>
+                <button id="filter-panel-header" onClick={() => selectCategory("")}>Products</button>
                 <ul>
                     <li>
-                        <h2>Prints</h2>
+                        <button onClick={() => selectCategory("ZZNPNZ6N7AWD3RG5LVTUKTGW")}>Prints</button>
                     </li>
                     <li>
-                        <h2>Stickers</h2>
+                        <button onClick={() => selectCategory("Q65CUOGNBY7YMRJT42NGYZLK")}>Stickers</button>
                     </li>
                     <li>
-                        <h2>Comics</h2>
+                        <button onClick={() => selectCategory("PLACEHOLDER FOR COMIC ID")}>Comics</button>
                     </li>
                 </ul>
             </div>
