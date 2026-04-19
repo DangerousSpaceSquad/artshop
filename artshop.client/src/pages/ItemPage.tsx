@@ -10,6 +10,7 @@ export default function ItemPage() {
     const [cookies, setCookie] = useCookies(['cart']);
 
     const [quantity, setQuantity] = useState(1);
+    const [isItemInCart, setIsItemInCart] = useState(false);
     const [stockCount, setStockCount] = useState(0);
     const [itemDetails, setItemDetails] = useState();
     const [itemVariationDetails, setItemVariationDetails] = useState();
@@ -82,7 +83,8 @@ export default function ItemPage() {
                 currentCartQuantity++;
             }
         }
-        setQuantity(currentCartQuantity);
+        setIsItemInCart(currentCartQuantity > 0);
+        setQuantity(currentCartQuantity <= 0 ? 1 : currentCartQuantity);
     }, [variationId])
 
 
@@ -95,7 +97,8 @@ export default function ItemPage() {
 
     function DecrementQ() {
         setQuantity(curQuantity => {
-            if (curQuantity > 1) return curQuantity - 1
+            if (curQuantity > 1) return curQuantity - 1;
+            if (isItemInCart && curQuantity == 1) return curQuantity - 1;
             return curQuantity
         });
     }
@@ -132,6 +135,10 @@ export default function ItemPage() {
         incrementButtonClass = "qty-btn disabled-btn";
     }
 
+    let cartButtonText = "Add to cart";
+    if (isItemInCart) cartButtonText = "Update cart";
+    if (quantity == 0) cartButtonText = "Remove from cart";
+
     return (
         <div className="item">
             <img src={imageSrc} className="product-image" />
@@ -148,7 +155,7 @@ export default function ItemPage() {
                     <p>{quantity}</p>
                     <button onClick={IncrementQ} className = {incrementButtonClass} style={{right: 0}}><ChevronRight /></button>
                 </div>
-                <button className = "cart-add-btn" onClick={addToCart}>Add to cart</button>
+                <button className = "cart-add-btn" onClick={addToCart}>{cartButtonText}</button>
                 <div>
                     <h2>Description:</h2>
                     {itemDetails.object.item_data.description_plaintext}
