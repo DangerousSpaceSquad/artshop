@@ -9,11 +9,15 @@ source .env/secrets.config
 MODE=$1
 if [ -z "$MODE" ]
 then
-    echo "To set the build environment, run this script with \`DEBUG\` (faster, debugging tools), \`STAGE\` (slower, realistic enviroment), or \`PROD\` (deploy to production) as the first argument. Defaulting to \`STAGE\`."
+    echo "To set the build environment, run this script with \`DEBUG\` (faster, debugging tools), \`STAGE\` (slower, realistic enviroment), or \`PROD\` (production mode) as the first argument. Defaulting to \`STAGE\`."
     MODE=STAGE
 fi
 echo $MODE
-if [ "$MODE" == "STAGE" ]
+if [ "$MODE" == "PROD" ]
+then
+    ./deployment/scripts/containerize.sh $TAG && \
+    . ./deployment/scripts/run_docker.sh $TAG true
+elif [ "$MODE" == "STAGE" ]
 then
     ./deployment/scripts/containerize.sh $TAG && \
     . ./deployment/scripts/run_docker.sh $TAG
