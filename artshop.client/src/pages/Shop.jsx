@@ -26,7 +26,7 @@ export default function Home() {
                         <button onClick={() => selectCategory("Q65CUOGNBY7YMRJT42NGYZLK")}>Stickers</button>
                     </li>
                     <li>
-                        <button onClick={() => selectCategory("PLACEHOLDER FOR COMIC ID")}>Comics</button>
+                        <button onClick={() => selectCategory("HLZD2WJPH5IA2V2F2JWZVBUS")}>Comics</button>
                     </li>
                 </ul>
             </div>
