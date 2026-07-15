@@ -1,13 +1,14 @@
 import carousel1 from "../assets/LaunchCarouselItem.png"
 import carousel2 from "../assets/StickersCarouselItem.png"
 import carousel3 from "../assets/PrintsCarouselItem.png"
+import carousel4 from "../assets/NewPrintsJuly2026Carousell.png"
 
 import { useState, useEffect } from 'react';
 import { ImageSlider } from "../ImageSlider";
 import ShopItem from "../ShopItem";
 import './Home.css'
 
-const CAROUSEL_IMAGES = [carousel1, carousel2, carousel3]
+const CAROUSEL_IMAGES = [carousel1, carousel2, carousel3, carousel4]
 
 export default function Home() {
 
