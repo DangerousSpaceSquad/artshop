@@ -1,7 +1,7 @@
 import './Cart.css'
 import { useState, useEffect } from "react"
-import { ChevronLeft, ChevronRight, Trash } from "lucide-react"
 import { useCookies } from 'react-cookie'
+import CartItem from "../CartItem";
 
 /**
  * Convert a list of items in the cart to a dictionary of items.
@@ -22,33 +22,9 @@ function cartListToDict(cartList) {
 
 export default function Cart() {
     const [cartItemDetails, setCartItemDetails] = useState([]);
-    const [isLoading, setLoading] = useState(false);
-    const [cookies, setCookie, removeCookie] = useCookies(['cart']);
+    const [cookies, , removeCookie] = useCookies(['cart']);
     const [stockCounts, setStockCounts] = useState({});
-
-    function IncrementQ(variationId) {
-        let cartList = cookies.cart;
-        let currentCount = 0;
-        for (const cartItem of cartList) {
-            if (cartItem === variationId) currentCount ++;
-        }
-        if (currentCount >= stockCounts[variationId]) return;
-        cartList.push(variationId);
-        setCookie('cart', cartList);
-    }
-
-    function DecrementQ(variationId) {
-        let cartList = cookies.cart;
-        let itemIndex = cartList.indexOf(variationId);
-        cartList.splice(itemIndex, 1);
-        setCookie('cart', cartList);
-    }
-
-    function removeFromCart(variationId) {
-        let cartList = cookies.cart;
-        let outList = cartList.filter(cartItem => cartItem != variationId);
-        setCookie('cart', outList);
-    }
+    const [totalPriceCents, setTotalPriceCents] = useState(0);
 
     async function checkout() {
         let cartList = cookies.cart;
@@ -96,39 +72,34 @@ export default function Cart() {
             for (let [cartItemId] of Object.entries(cartDict)){
                 httpResults.push(fetch(`/api/square/GetCatalogItem/` + cartItemId));
             }
+            let grandTotal = 0;
             await fetchItemStockCounts();
             await Promise.all(httpResults).then(async (httpResponse) => {
                 let itemsInCart = [];
                 for (const result of httpResponse) {
-                    if (!result.ok || result.errors) {
+                    if (!result.ok) {
                         console.log("Unexpected error while retrieving item details");
                         continue;
                     }
                     let squareItemDetails = (await result.json());
                     squareItemDetails.quantity = cartDict[squareItemDetails.object.id];
+                    grandTotal += (squareItemDetails.object.item_variation_data.price_money.amount/100) * squareItemDetails.quantity
                     itemsInCart.push(squareItemDetails);
                 }
-                setLoading(false);
                 setCartItemDetails(itemsInCart);
+                setTotalPriceCents(grandTotal);
             })
         }
-
         if (!cookies.cart) return;
-        setLoading(true);
         let cartDict = cartListToDict(cookies.cart);
         fetchItemDetails(cartDict);
-    }, [cookies.cart]);
-
-    if (isLoading) {
-        return <p> Loading... </p>
-    }
+    }, [cookies.cart])
 
     if (!cookies.cart || cookies.cart.length <= 0) {
         return <p>Your cart is empty!</p>
     }
 
     let cartContents = [];
-    let grandTotal = 0;
 
     for (const cartItem of cartItemDetails) {
         let itemName = "ERROR: Item name not found.\n"
@@ -144,32 +115,26 @@ export default function Cart() {
             }
         }
         itemName += ` (${cartItem.object.item_variation_data.name})`
-        grandTotal += priceCents * cartItem.quantity;
-
-        let incrementBtnClass = "cart-qty-btn";
-        if (cartItem.quantity >= stockCounts[cartItem.object.id]) {
-            incrementBtnClass = "cart-qty-btn disabled-qty-btn";
-        }
 
         cartContents.push(
-        <tr>
-            <td className='no-indent'>
-                <button onClick={() => removeFromCart(cartItem.object.id)}className='trash-btn'><Trash /></button>
-            </td>
-            <td className='no-indent'><img className='cart-item-img' src={itemImageSrc} /></td>
-            <td className='no-indent'>{itemName}</td>
-            <td data-label="Price">${priceCents.toFixed(2)}</td>
-            <td data-label="Quantity">
-                <div className="quantity-selector">
-                    <button onClick={() => DecrementQ(cartItem.object.id)} className="cart-qty-btn"><ChevronLeft /></button>
-                    <p>{cartItem.quantity}</p>
-                    <button onClick={() => IncrementQ(cartItem.object.id)} className={incrementBtnClass}><ChevronRight /></button>
-                </div>
-            </td>
-            <td data-label="Subtotal">${(priceCents * cartItem.quantity).toFixed(2)}</td>
-        </tr>
+        <CartItem itemId={cartItem.object.id} priceCents={priceCents} initialQuantity = {cartItem.quantity}
+            itemName = {itemName} imageSrc = {itemImageSrc} maxQuantity = {stockCounts[cartItem.object.id]}></CartItem>
         );
     }
+
+    if (cartContents.length > 0){
+        console.log(cartContents[0].props);
+    }
+    cartContents.sort((a, b) => {
+        if (a.props.itemName < b.props.itemName) {
+            return -1;
+        }
+        if (a.props.itemName > b.props.itemName) {
+            return 1;
+        }
+        return 0;
+        
+    });
     
     return <div className='cart-container'>
         <h1>Your cart:</h1>
@@ -194,7 +159,7 @@ export default function Cart() {
                     <td />
                     <td />
                     <td>Estimated total:</td>
-                    <td>${grandTotal.toFixed(2)}</td>
+                    <td>${totalPriceCents.toFixed(2)}</td>
                 </tr>
             </tbody>
         </table>
