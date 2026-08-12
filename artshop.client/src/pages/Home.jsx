@@ -1,4 +1,4 @@
-import carousel1 from "../assets/LaunchCarouselItem.png"
+import carousel1 from "../assets/NewStickersAugust2026Carousell.png"
 import carousel2 from "../assets/StickersCarouselItem.png"
 import carousel3 from "../assets/PrintsCarouselItem.png"
 import carousel4 from "../assets/NewPrintsJuly2026Carousell.png"
